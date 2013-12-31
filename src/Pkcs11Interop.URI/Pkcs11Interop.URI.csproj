@@ -40,10 +40,20 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pkcs11Uri.cs" />
+    <Compile Include="Pkcs11UriBuilder.cs" />
+    <Compile Include="Pkcs11UriException.cs" />
+    <Compile Include="Pkcs11UriSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CHANGELOG.txt" />
+    <None Include="ISSUES.txt" />
+    <None Include="LICENSE.txt" />
+    <None Include="README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
