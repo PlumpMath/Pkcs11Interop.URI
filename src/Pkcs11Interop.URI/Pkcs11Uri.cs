@@ -26,16 +26,28 @@ using LLA8 = Net.Pkcs11Interop.LowLevelAPI8;
 
 namespace Net.Pkcs11Interop.URI
 {
+    /// <summary>
+    /// PKCS#11 URI parser
+    /// </summary>
     public class Pkcs11Uri
     {
         #region Constructors
 
+        /// <summary>
+        /// Intializes new instance of Pkcs11Uri class that parses provided PKCS#11 URI and checks max lengths of path attribute values
+        /// </summary>
+        /// <param name="uri">PKCS#11 URI to be parsed</param>
         public Pkcs11Uri(string uri)
             : this(uri, true)
         {
 
         }
 
+        /// <summary>
+        /// Intializes new instance of Pkcs11Uri class that parses provided PKCS#11 URI
+        /// </summary>
+        /// <param name="uri">PKCS#11 URI to be parsed</param>
+        /// <param name="checkLengths">Flag indicating whether max lengths of path attribute values should be checked</param>
         public Pkcs11Uri(string uri, bool checkLengths)
         {
             if (string.IsNullOrEmpty(uri))
@@ -50,8 +62,14 @@ namespace Net.Pkcs11Interop.URI
 
         #region Properties and variables
 
+        /// <summary>
+        /// Flag indicating whether max lengths of path attribute values were checked
+        /// </summary>
         private bool _checkLengths = true;
 
+        /// <summary>
+        /// Flag indicating whether max lengths of path attribute values were checked
+        /// </summary>
         public bool ChecksLengths
         {
             get
@@ -62,6 +80,9 @@ namespace Net.Pkcs11Interop.URI
 
         #region Flags
         
+        /// <summary>
+        /// Flag indicating whether PKCS#11 URI defines specific PKCS#11 library
+        /// </summary>
         public bool DefinesLibrary
         {
             get
@@ -73,6 +94,9 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Flag indicating whether PKCS#11 URI defines specific token
+        /// </summary>
         public bool DefinesToken
         {
             get
@@ -84,6 +108,9 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Flag indicating whether PKCS#11 URI defines specific object
+        /// </summary>
         public bool DefinesObject
         {
             get
@@ -98,8 +125,14 @@ namespace Net.Pkcs11Interop.URI
 
         #region Path attributes
 
+        /// <summary>
+        /// Value of path attribute "token" that corresponds to the "label" member of the CK_TOKEN_INFO structure
+        /// </summary>
         private string _token = null;
 
+        /// <summary>
+        /// Value of path attribute "token" that corresponds to the "label" member of the CK_TOKEN_INFO structure
+        /// </summary>
         public string Token
         {
             get
@@ -108,8 +141,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "manufacturer" that corresponds to the "manufacturerID" member of CK_TOKEN_INFO structure
+        /// </summary>
         private string _manufacturer = null;
-
+        
+        /// <summary>
+        /// Value of path attribute "manufacturer" that corresponds to the "manufacturerID" member of CK_TOKEN_INFO structure
+        /// </summary>
         public string Manufacturer
         {
             get
@@ -118,8 +157,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "serial" that corresponds to the "serialNumber" member of CK_TOKEN_INFO structure
+        /// </summary>
         private string _serial = null;
 
+        /// <summary>
+        /// Value of path attribute "serial" that corresponds to the "serialNumber" member of CK_TOKEN_INFO structure
+        /// </summary>
         public string Serial
         {
             get
@@ -128,8 +173,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "model" that corresponds to the "model" member of CK_TOKEN_INFO structure
+        /// </summary>
         private string _model = null;
 
+        /// <summary>
+        /// Value of path attribute "model" that corresponds to the "model" member of CK_TOKEN_INFO structure
+        /// </summary>
         public string Model
         {
             get
@@ -138,8 +189,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "library-manufacturer" that corresponds to the "manufacturerID" member of CK_INFO structure
+        /// </summary>
         private string _libraryManufacturer = null;
 
+        /// <summary>
+        /// Value of path attribute "library-manufacturer" that corresponds to the "manufacturerID" member of CK_INFO structure
+        /// </summary>
         public string LibraryManufacturer
         {
             get
@@ -148,8 +205,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "library-description" that corresponds to the "libraryDescription" member of CK_INFO structure
+        /// </summary>
         private string _libraryDescription = null;
 
+        /// <summary>
+        /// Value of path attribute "library-description" that corresponds to the "libraryDescription" member of CK_INFO structure
+        /// </summary>
         public string LibraryDescription
         {
             get
@@ -158,8 +221,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "library-version" that corresponds to the "libraryVersion" member of CK_INFO structure
+        /// </summary>
         private string _libraryVersion = null;
 
+        /// <summary>
+        /// Value of path attribute "library-version" that corresponds to the "libraryVersion" member of CK_INFO structure
+        /// </summary>
         public string LibraryVersion
         {
             get
@@ -168,8 +237,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "object" that corresponds to the "CKA_LABEL" object attribute
+        /// </summary>
         private string _object = null;
 
+        /// <summary>
+        /// Value of path attribute "object" that corresponds to the "CKA_LABEL" object attribute
+        /// </summary>
         public string Object
         {
             get
@@ -178,8 +253,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "type" that corresponds to the "CKA_CLASS" object attribute
+        /// </summary>
         private CKO? _type = null;
 
+        /// <summary>
+        /// Value of path attribute "type" that corresponds to the "CKA_CLASS" object attribute
+        /// </summary>
         public CKO? Type
         {
             get
@@ -188,8 +269,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "id" that corresponds to the "CKA_ID" object attribute
+        /// </summary>
         private byte[] _id = null;
 
+        /// <summary>
+        /// Value of path attribute "id" that corresponds to the "CKA_ID" object attribute
+        /// </summary>
         public byte[] Id
         {
             get
@@ -198,8 +285,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Collection of unknown vendor specific path attributes
+        /// </summary>
         private Dictionary<string, string> _unknownPathAttributes = null;
 
+        /// <summary>
+        /// Collection of unknown vendor specific path attributes
+        /// </summary>
         public Dictionary<string, string> UnknownPathAttributes
         {
             get
@@ -210,6 +303,10 @@ namespace Net.Pkcs11Interop.URI
 
         #region GetObjectAttributes
 
+        /// <summary>
+        /// Returns list of object attributes defined by PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">List of object attributes defined by PKCS#11 URI</param>
         public void GetObjectAttributes(out List<HLA.ObjectAttribute> objectAttributes)
         {
             List<HLA.ObjectAttribute> attributes = null;
@@ -228,6 +325,10 @@ namespace Net.Pkcs11Interop.URI
             objectAttributes = attributes;
         }
 
+        /// <summary>
+        /// Returns list of object attributes defined by PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">List of object attributes defined by PKCS#11 URI</param>
         public void GetObjectAttributes(out List<HLA8.ObjectAttribute> objectAttributes)
         {
             List<HLA8.ObjectAttribute> attributes = null;
@@ -246,6 +347,10 @@ namespace Net.Pkcs11Interop.URI
             objectAttributes = attributes;
         }
 
+        /// <summary>
+        /// Returns list of object attributes defined by PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">List of object attributes defined by PKCS#11 URI</param>
         public void GetObjectAttributes(out List<HLA4.ObjectAttribute> objectAttributes)
         {
             List<HLA4.ObjectAttribute> attributes = null;
@@ -264,6 +369,10 @@ namespace Net.Pkcs11Interop.URI
             objectAttributes = attributes;
         }
 
+        /// <summary>
+        /// Returns list of object attributes defined by PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">List of object attributes defined by PKCS#11 URI</param>
         public void GetObjectAttributes(out LLA8.CK_ATTRIBUTE[] objectAttributes)
         {
             List<LLA8.CK_ATTRIBUTE> attributes = null;
@@ -282,6 +391,10 @@ namespace Net.Pkcs11Interop.URI
             objectAttributes = attributes.ToArray();
         }
 
+        /// <summary>
+        /// Returns list of object attributes defined by PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">List of object attributes defined by PKCS#11 URI</param>
         public void GetObjectAttributes(out LLA4.CK_ATTRIBUTE[] objectAttributes)
         {
             List<LLA4.CK_ATTRIBUTE> attributes = null;
@@ -306,8 +419,14 @@ namespace Net.Pkcs11Interop.URI
 
         #region Query attributes
 
+        /// <summary>
+        /// Value of query attribute "pin-source" that specifies where token PIN can be obtained
+        /// </summary>
         private string _pinSource = null;
 
+        /// <summary>
+        /// Value of query attribute "pin-source" that specifies where token PIN can be obtained
+        /// </summary>
         public string PinSource
         {
             get
@@ -316,8 +435,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-pin-value" that contains token PIN
+        /// </summary>
         private string _xPinValue = null;
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-pin-value" that contains token PIN
+        /// </summary>
         public string XPinValue
         {
             get
@@ -326,8 +451,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-library-path" that specifies name of (or path to) the PKCS#11 library
+        /// </summary>
         private string _xLibraryPath = null;
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-library-path" that specifies name of (or path to) the PKCS#11 library
+        /// </summary>
         public string XLibraryPath
         {
             get
@@ -336,8 +467,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Collection of unknown vendor specific query attributes
+        /// </summary>
         private Dictionary<string, List<string>> _unknownQueryAttributes = null;
 
+        /// <summary>
+        /// Collection of unknown vendor specific query attributes
+        /// </summary>
         public Dictionary<string, List<string>> UnknownQueryAttributes
         {
             get
@@ -354,6 +491,13 @@ namespace Net.Pkcs11Interop.URI
 
         #region LibraryInfo
 
+        /// <summary>
+        /// Checks whether PKCS#11 library information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="manufacturer">PKCS#11 library manufacturer</param>
+        /// <param name="description">PKCS#11 library description</param>
+        /// <param name="version">PKCS#11 library version</param>
+        /// <returns>True if PKCS#11 library information matches PKCS#11 URI</returns>
         private bool Matches(string manufacturer, string description, string version)
         {
             if (_unknownPathAttributes != null)
@@ -371,6 +515,11 @@ namespace Net.Pkcs11Interop.URI
             return true;
         }
 
+        /// <summary>
+        /// Checks whether PKCS#11 library information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="libraryInfo">PKCS#11 library information</param>
+        /// <returns>True if PKCS#11 library information matches PKCS#11 URI</returns>
         public bool Matches(HLA.LibraryInfo libraryInfo)
         {
             if (libraryInfo == null)
@@ -379,6 +528,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(libraryInfo.ManufacturerId, libraryInfo.LibraryDescription, libraryInfo.LibraryVersion);
         }
 
+        /// <summary>
+        /// Checks whether PKCS#11 library information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="libraryInfo">PKCS#11 library information</param>
+        /// <returns>True if PKCS#11 library information matches PKCS#11 URI</returns>
         public bool Matches(HLA8.LibraryInfo libraryInfo)
         {
             if (libraryInfo == null)
@@ -387,6 +541,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(libraryInfo.ManufacturerId, libraryInfo.LibraryDescription, libraryInfo.LibraryVersion);
         }
 
+        /// <summary>
+        /// Checks whether PKCS#11 library information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="libraryInfo">PKCS#11 library information</param>
+        /// <returns>True if PKCS#11 library information matches PKCS#11 URI</returns>
         public bool Matches(HLA4.LibraryInfo libraryInfo)
         {
             if (libraryInfo == null)
@@ -395,6 +554,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(libraryInfo.ManufacturerId, libraryInfo.LibraryDescription, libraryInfo.LibraryVersion);
         }
 
+        /// <summary>
+        /// Checks whether PKCS#11 library information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="libraryInfo">PKCS#11 library information</param>
+        /// <returns>True if PKCS#11 library information matches PKCS#11 URI</returns>
         public bool Matches(LLA8.CK_INFO libraryInfo)
         {
             string manufacturer = ConvertUtils.BytesToUtf8String(libraryInfo.ManufacturerId, true);
@@ -404,6 +568,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(manufacturer, description, version);
         }
 
+        /// <summary>
+        /// Checks whether PKCS#11 library information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="libraryInfo">PKCS#11 library information</param>
+        /// <returns>True if PKCS#11 library information matches PKCS#11 URI</returns>
         public bool Matches(LLA4.CK_INFO libraryInfo)
         {
             string manufacturer = ConvertUtils.BytesToUtf8String(libraryInfo.ManufacturerId, true);
@@ -417,6 +586,14 @@ namespace Net.Pkcs11Interop.URI
 
         #region TokenInfo
 
+        /// <summary>
+        /// Checks whether token information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="token">Token label</param>
+        /// <param name="manufacturer">Token manufacturer</param>
+        /// <param name="serial">Token serial number</param>
+        /// <param name="model">Token model</param>
+        /// <returns>True if token information matches PKCS#11 URI</returns>
         private bool Matches(string token, string manufacturer, string serial, string model)
         {
             if (_unknownPathAttributes != null)
@@ -437,6 +614,11 @@ namespace Net.Pkcs11Interop.URI
             return true;
         }
 
+        /// <summary>
+        /// Checks whether token information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="tokenInfo">Token information</param>
+        /// <returns>True if token information matches PKCS#11 URI</returns>
         public bool Matches(HLA.TokenInfo tokenInfo)
         {
             if (tokenInfo == null)
@@ -445,6 +627,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(tokenInfo.Label, tokenInfo.ManufacturerId, tokenInfo.SerialNumber, tokenInfo.Model);
         }
 
+        /// <summary>
+        /// Checks whether token information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="tokenInfo">Token information</param>
+        /// <returns>True if token information matches PKCS#11 URI</returns>
         public bool Matches(HLA8.TokenInfo tokenInfo)
         {
             if (tokenInfo == null)
@@ -453,6 +640,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(tokenInfo.Label, tokenInfo.ManufacturerId, tokenInfo.SerialNumber, tokenInfo.Model);
         }
 
+        /// <summary>
+        /// Checks whether token information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="tokenInfo">Token information</param>
+        /// <returns>True if token information matches PKCS#11 URI</returns>
         public bool Matches(HLA4.TokenInfo tokenInfo)
         {
             if (tokenInfo == null)
@@ -461,6 +653,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(tokenInfo.Label, tokenInfo.ManufacturerId, tokenInfo.SerialNumber, tokenInfo.Model);
         }
 
+        /// <summary>
+        /// Checks whether token information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="tokenInfo">Token information</param>
+        /// <returns>True if token information matches PKCS#11 URI</returns>
         public bool Matches(LLA8.CK_TOKEN_INFO tokenInfo)
         {
             string token = ConvertUtils.BytesToUtf8String(tokenInfo.Label, true);
@@ -471,6 +668,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(token, manufacturer, serial, model);
         }
 
+        /// <summary>
+        /// Checks whether token information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="tokenInfo">Token information</param>
+        /// <returns>True if token information matches PKCS#11 URI</returns>
         public bool Matches(LLA4.CK_TOKEN_INFO tokenInfo)
         {
             string token = ConvertUtils.BytesToUtf8String(tokenInfo.Label, true);
@@ -485,6 +687,13 @@ namespace Net.Pkcs11Interop.URI
 
         #region ObjectAttributes
 
+        /// <summary>
+        /// Checks whether object attributes match PKCS#11 URI
+        /// </summary>
+        /// <param name="ckaClass">Value of CKA_CLASS object attribute</param>
+        /// <param name="ckaLabel">Value of CKA_LABEL object attribute</param>
+        /// <param name="ckaId">Value of CKA_ID object attribute</param>
+        /// <returns>True if object attributes match PKCS#11 URI</returns>
         private bool Matches(CKO? ckaClass, string ckaLabel, byte[] ckaId)
         {
             if (_unknownPathAttributes != null)
@@ -502,6 +711,11 @@ namespace Net.Pkcs11Interop.URI
             return true;
         }
 
+        /// <summary>
+        /// Checks whether object attributes match PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">Object attributes</param>
+        /// <returns>True if object attributes match PKCS#11 URI</returns>
         public bool Matches(List<HLA.ObjectAttribute> objectAttributes)
         {
             if (objectAttributes == null)
@@ -556,6 +770,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(ckaClassValue, ckaLabelValue, ckaIdValue);
         }
 
+        /// <summary>
+        /// Checks whether object attributes match PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">Object attributes</param>
+        /// <returns>True if object attributes match PKCS#11 URI</returns>
         public bool Matches(List<HLA8.ObjectAttribute> objectAttributes)
         {
             if (objectAttributes == null)
@@ -610,6 +829,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(ckaClassValue, ckaLabelValue, ckaIdValue);
         }
 
+        /// <summary>
+        /// Checks whether object attributes match PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">Object attributes</param>
+        /// <returns>True if object attributes match PKCS#11 URI</returns>
         public bool Matches(List<HLA4.ObjectAttribute> objectAttributes)
         {
             if (objectAttributes == null)
@@ -664,6 +888,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(ckaClassValue, ckaLabelValue, ckaIdValue);
         }
 
+        /// <summary>
+        /// Checks whether object attributes match PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">Object attributes</param>
+        /// <returns>True if object attributes match PKCS#11 URI</returns>
         public bool Matches(List<LLA8.CK_ATTRIBUTE> objectAttributes)
         {
             if (objectAttributes == null)
@@ -719,6 +948,11 @@ namespace Net.Pkcs11Interop.URI
             return Matches(ckaClassValue, ckaLabelValue, ckaIdValue);
         }
 
+        /// <summary>
+        /// Checks whether object attributes match PKCS#11 URI
+        /// </summary>
+        /// <param name="objectAttributes">Object attributes</param>
+        /// <returns>True if object attributes match PKCS#11 URI</returns>
         public bool Matches(List<LLA4.CK_ATTRIBUTE> objectAttributes)
         {
             if (objectAttributes == null)
@@ -778,6 +1012,11 @@ namespace Net.Pkcs11Interop.URI
 
         #region GetMatchingSlotList
 
+        /// <summary>
+        /// Obtains a list of all slots where token that matches PKCS#11 URI is present
+        /// </summary>
+        /// <param name="pkcs11">High level PKCS#11 wrapper</param>
+        /// <returns>List of slots matching PKCS#11 URI</returns>
         public List<HLA.Slot> GetMatchingSlotList(HLA.Pkcs11 pkcs11)
         {
             if (pkcs11 == null)
@@ -803,6 +1042,11 @@ namespace Net.Pkcs11Interop.URI
             return matchingSlots;
         }
 
+        /// <summary>
+        /// Obtains a list of all slots where token that matches PKCS#11 URI is present
+        /// </summary>
+        /// <param name="pkcs11">High level PKCS#11 wrapper</param>
+        /// <returns>List of slots matching PKCS#11 URI</returns>
         public List<HLA8.Slot> GetMatchingSlotList(HLA8.Pkcs11 pkcs11)
         {
             if (pkcs11 == null)
@@ -828,6 +1072,11 @@ namespace Net.Pkcs11Interop.URI
             return matchingSlots;
         }
 
+        /// <summary>
+        /// Obtains a list of all slots where token that matches PKCS#11 URI is present
+        /// </summary>
+        /// <param name="pkcs11">High level PKCS#11 wrapper</param>
+        /// <returns>List of slots matching PKCS#11 URI</returns>
         public List<HLA4.Slot> GetMatchingSlotList(HLA4.Pkcs11 pkcs11)
         {
             if (pkcs11 == null)
@@ -853,6 +1102,12 @@ namespace Net.Pkcs11Interop.URI
             return matchingSlots;
         }
 
+        /// <summary>
+        /// Obtains a list of all slots where token that matches PKCS#11 URI is present
+        /// </summary>
+        /// <param name="pkcs11">Low level PKCS#11 wrapper</param>
+        /// <param name="slotList">List of slots matching PKCS#11 URI</param>
+        /// <returns>CKR_OK if successful; any other value otherwise</returns>
         public CKR GetMatchingSlotList(LLA8.Pkcs11 pkcs11, out ulong[] slotList)
         {
             if (pkcs11 == null)
@@ -921,6 +1176,12 @@ namespace Net.Pkcs11Interop.URI
             return CKR.CKR_OK;
         }
 
+        /// <summary>
+        /// Obtains a list of all slots where token that matches PKCS#11 URI is present
+        /// </summary>
+        /// <param name="pkcs11">Low level PKCS#11 wrapper</param>
+        /// <param name="slotList">List of slots matching PKCS#11 URI</param>
+        /// <returns>CKR_OK if successful; any other value otherwise</returns>
         public CKR GetMatchingSlotList(LLA4.Pkcs11 pkcs11, out uint[] slotList)
         {
             if (pkcs11 == null)
@@ -995,33 +1256,38 @@ namespace Net.Pkcs11Interop.URI
 
         #region Private methods
 
-        private string Extract(string uri)
+        /// <summary>
+        /// Extracts PKCS#11 URI from text and removes all whitespaces
+        /// </summary>
+        /// <param name="text">Text that contains PKCS#11 URI</param>
+        /// <returns>PKCS#11 URI without whitespaces</returns>
+        private string Extract(string text)
         {
-            if (string.IsNullOrEmpty(uri))
-                throw new ArgumentNullException("uri");
+            if (string.IsNullOrEmpty(text))
+                throw new ArgumentNullException("text");
 
-            StringBuilder stringBuilder = new StringBuilder(uri.Length);
-            for (int i = 0; i < uri.Length; i++)
-                if (!char.IsWhiteSpace(uri[i]))
-                    stringBuilder.Append(uri[i]);
+            StringBuilder stringBuilder = new StringBuilder(text.Length);
+            for (int i = 0; i < text.Length; i++)
+                if (!char.IsWhiteSpace(text[i]))
+                    stringBuilder.Append(text[i]);
 
-            string extractedUri = stringBuilder.ToString();
+            string uri = stringBuilder.ToString();
 
             int firstCharPosition = 0;
             int lastCharPosition = 0;
 
-            firstCharPosition = extractedUri.IndexOf(Pkcs11UriSpec.Pk11UriSchemeName + Pkcs11UriSpec.Pk11UriAndPathSeparator, StringComparison.InvariantCulture);
+            firstCharPosition = uri.IndexOf(Pkcs11UriSpec.Pk11UriSchemeName + Pkcs11UriSpec.Pk11UriAndPathSeparator, StringComparison.InvariantCulture);
             if (firstCharPosition > 0)
             {
-                if (extractedUri[firstCharPosition - 1] == '"')
+                if (uri[firstCharPosition - 1] == '"')
                 {
-                    extractedUri = extractedUri.Remove(0, firstCharPosition);
-                    lastCharPosition = extractedUri.IndexOf('"');
+                    uri = uri.Remove(0, firstCharPosition);
+                    lastCharPosition = uri.IndexOf('"');
                 }
-                else if (extractedUri[firstCharPosition - 1] == '<')
+                else if (uri[firstCharPosition - 1] == '<')
                 {
-                    extractedUri = extractedUri.Remove(0, firstCharPosition);
-                    lastCharPosition = extractedUri.IndexOf('>');
+                    uri = uri.Remove(0, firstCharPosition);
+                    lastCharPosition = uri.IndexOf('>');
                 }
                 else
                     throw new Pkcs11UriException("URI is not delimited within double quotes or angle brackets");
@@ -1029,12 +1295,16 @@ namespace Net.Pkcs11Interop.URI
                 if (lastCharPosition < 0)
                     throw new Pkcs11UriException("URI is not correctly delimited within double quotes or angle brackets");
 
-                extractedUri = extractedUri.Substring(0, lastCharPosition);
+                uri = uri.Substring(0, lastCharPosition);
             }
 
-            return extractedUri;
+            return uri;
         }
 
+        /// <summary>
+        /// Parses PKCS#11 URI
+        /// </summary>
+        /// <param name="uri">PKCS#11 URI that should be parsed</param>
         private void Parse(string uri)
         {
             if (string.IsNullOrEmpty(uri))
@@ -1076,6 +1346,10 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Parses path attribute
+        /// </summary>
+        /// <param name="attribute">Path attribute that should be parsed</param>
         private void ParsePathAttribute(string attribute)
         {
             string[] parts = attribute.Split(new string[] { Pkcs11UriSpec.Pk11PathAttributeNameAndValueSeparator }, 2, StringSplitOptions.None);
@@ -1348,6 +1622,10 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Parses query attribute
+        /// </summary>
+        /// <param name="attribute">Query attribute that should be parsed</param>
         private void ParseQueryAttribute(string attribute)
         {
             string[] parts = attribute.Split(new string[] { Pkcs11UriSpec.Pk11QueryAttributeNameAndValueSeparator }, 2, StringSplitOptions.None);
@@ -1439,22 +1717,30 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
-        private byte[] DecodePk11String(string attributeName, string attributeValue, char[] allowedChars, bool decodePctEncodedChars)
+        /// <summary>
+        /// Checks whether Pk11String contains invalid characters and optionaly decodes percent encoded characters
+        /// </summary>
+        /// <param name="attributeName">Name of attribute whose value is being decoded</param>
+        /// <param name="pk11String">Pk11String that should be decoded</param>
+        /// <param name="allowedChars">Characters allowed to be present unencoded in Pk11String</param>
+        /// <param name="decodePctEncodedChars">Flag indicating whether percent encoded characters should be decoded</param>
+        /// <returns>Decoded Pk11String</returns>
+        private byte[] DecodePk11String(string attributeName, string pk11String, char[] allowedChars, bool decodePctEncodedChars)
         {
-            if (string.IsNullOrEmpty(attributeValue))
+            if (string.IsNullOrEmpty(pk11String))
                 return null;
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 int i = 0;
 
-                while (i < attributeValue.Length)
+                while (i < pk11String.Length)
                 {
                     if (decodePctEncodedChars)
                     {
-                        if (attributeValue[i] == '%')
+                        if (pk11String[i] == '%')
                         {
-                            if ((i + 2) > attributeValue.Length)
+                            if ((i + 2) > pk11String.Length)
                             {
                                 if (attributeName != null)
                                     throw new Pkcs11UriException("Value of " + attributeName + " attribute contains invalid application of percent-encoding");
@@ -1462,7 +1748,7 @@ namespace Net.Pkcs11Interop.URI
                                     throw new Pkcs11UriException("URI contains invalid application of percent-encoding");
                             }
 
-                            if (!IsHexDigit(attributeValue[i + 1]) || !IsHexDigit(attributeValue[i + 2]))
+                            if (!IsHexDigit(pk11String[i + 1]) || !IsHexDigit(pk11String[i + 2]))
                             {
                                 if (attributeName != null)
                                     throw new Pkcs11UriException("Value of " + attributeName + " attribute contains invalid application of percent-encoding");
@@ -1470,7 +1756,7 @@ namespace Net.Pkcs11Interop.URI
                                     throw new Pkcs11UriException("URI contains invalid application of percent-encoding");
                             }
 
-                            memoryStream.WriteByte(Convert.ToByte(attributeValue.Substring(i + 1, 2), 16));
+                            memoryStream.WriteByte(Convert.ToByte(pk11String.Substring(i + 1, 2), 16));
                             i = i + 3;
                             continue;
                         }
@@ -1480,7 +1766,7 @@ namespace Net.Pkcs11Interop.URI
 
                     for (int j = 0; j < allowedChars.Length; j++)
                     {
-                        if (attributeValue[i] == allowedChars[j])
+                        if (pk11String[i] == allowedChars[j])
                         {
                             allowedChar = true;
                             break;
@@ -1489,7 +1775,7 @@ namespace Net.Pkcs11Interop.URI
 
                     if (allowedChar)
                     {
-                        memoryStream.WriteByte(Convert.ToByte(attributeValue[i]));
+                        memoryStream.WriteByte(Convert.ToByte(pk11String[i]));
                         i++;
                         continue;
                     }
@@ -1504,6 +1790,11 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Checks whether character is hex digit
+        /// </summary>
+        /// <param name="c">Character that should be checked</param>
+        /// <returns>True if character is hex digit false otherwise</returns>
         private bool IsHexDigit(char c)
         {
             return (((c >= 0x30) && (c <= 0x39)) || // 0-9
@@ -1511,6 +1802,12 @@ namespace Net.Pkcs11Interop.URI
                     ((c >= 0x61) && (c <= 0x66)));  // a-f
         }
 
+        /// <summary>
+        /// Checks whether string matches the value of string attribute
+        /// </summary>
+        /// <param name="uriString">Value of string attribute present (or not) in PKCS#11 URI</param>
+        /// <param name="inputString">String that should be compared with the value of string attribute</param>
+        /// <returns>True if string matches the value of string attribute</returns>
         private bool SimpleStringsMatch(string uriString, string inputString)
         {
             if (inputString == null)
@@ -1532,6 +1829,12 @@ namespace Net.Pkcs11Interop.URI
             return true;
         }
 
+        /// <summary>
+        /// Checks whether type matches the value of "type" path attribute
+        /// </summary>
+        /// <param name="uriType">Value of "type" path attribute present (or not) in PKCS#11 URI</param>
+        /// <param name="inputType">Type that should be compared with the value of "type" path attribute</param>
+        /// <returns>True if type matches the value of "type" path attribute</returns>
         private bool ObjectTypesMatch(CKO? uriType, CKO? inputType)
         {
             if (inputType == null)
@@ -1551,6 +1854,12 @@ namespace Net.Pkcs11Interop.URI
             return true;
         }
         
+        /// <summary>
+        /// Checks whether byte array matches the value of "id" path attribute
+        /// </summary>
+        /// <param name="uriArray">Value of "id" path attribute present (or not) in PKCS#11 URI</param>
+        /// <param name="inputArray">Byte array that should be compared with the value of "id" path attribute</param>
+        /// <returns>True if byte array matches the value of "id" path attribute</returns>
         private bool ByteArraysMatch(byte[] uriArray, byte[] inputArray)
         {
             if (inputArray == null)

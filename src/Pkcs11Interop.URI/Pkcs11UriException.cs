@@ -17,20 +17,35 @@ using System;
 
 namespace Net.Pkcs11Interop.URI
 {
+    /// <summary>
+    /// Exception that indicates error in PKCS#11 URI parsing or building process
+    /// </summary>
     public class Pkcs11UriException : Exception
     {
+        /// <summary>
+        /// Initializes a new instance of the Net.Pkcs11Interop.URI.Pkcs11UriException class
+        /// </summary>
         public Pkcs11UriException()
             : base()
         {
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the Net.Pkcs11Interop.URI.Pkcs11UriException class with a specified error message
+        /// </summary>
+        /// <param name="message">The message that describes the error</param>
         public Pkcs11UriException(string message)
             : base(message)
         {
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the Net.Pkcs11Interop.URI.Pkcs11UriException class with a specified error message and a reference to the inner exception that is the cause of this exception
+        /// </summary>
+        /// <param name="message">The message that describes the error</param>
+        /// <param name="innerException">The exception that is the cause of the current exception</param>
         public Pkcs11UriException(string message, Exception innerException)
             : base(message, innerException)
         {

@@ -20,21 +20,35 @@ using Net.Pkcs11Interop.Common;
 
 namespace Net.Pkcs11Interop.URI
 {
+    /// <summary>
+    /// PKCS#11 URI builder
+    /// </summary>
     public class Pkcs11UriBuilder
     {
         #region Constructors
 
+        /// <summary>
+        /// Intializes new instance of Pkcs11UriBuilder class that checks max lengths of path attribute values
+        /// </summary>
         public Pkcs11UriBuilder()
             : this(true)
         {
 
         }
 
+        /// <summary>
+        /// Intializes new instance of Pkcs11UriBuilder class
+        /// </summary>
+        /// <param name="checkLengths">Flag indicating whether max lengths of path attribute values should be checked</param>
         public Pkcs11UriBuilder(bool checkLengths)
         {
             _checkLengths = checkLengths;
         }
 
+        /// <summary>
+        /// Intializes new instance of Pkcs11UriBuilder class with specified PKCS#11 URI whose ChecksLengths property specifies whether max lengths of path attribute values should be checked
+        /// </summary>
+        /// <param name="pkcs11Uri">PKCS#11 URI with default values</param>
         public Pkcs11UriBuilder(Pkcs11Uri pkcs11Uri)
         {
             if (pkcs11Uri == null)
@@ -43,6 +57,11 @@ namespace Net.Pkcs11Interop.URI
             ConstructFromPkcs11Uri(pkcs11Uri, pkcs11Uri.ChecksLengths);
         }
 
+        /// <summary>
+        /// Intializes new instance of Pkcs11UriBuilder class with specified PKCS#11 URI
+        /// </summary>
+        /// <param name="pkcs11Uri">PKCS#11 URI with default values</param>
+        /// <param name="checkLengths">Flag indicating whether max lengths of path attribute values should be checked</param>
         public Pkcs11UriBuilder(Pkcs11Uri pkcs11Uri, bool checkLengths)
         {
             if (pkcs11Uri == null)
@@ -51,6 +70,11 @@ namespace Net.Pkcs11Interop.URI
             ConstructFromPkcs11Uri(pkcs11Uri, checkLengths);
         }
 
+        /// <summary>
+        /// Sets properties of Pkcs11UriBuilder class with default values specified by PKCS#11 URI
+        /// </summary>
+        /// <param name="pkcs11Uri">PKCS#11 URI with default values</param>
+        /// <param name="checkLengths">Flag indicating whether max lengths of path attribute values should be checked</param>
         private void ConstructFromPkcs11Uri(Pkcs11Uri pkcs11Uri, bool checkLengths)
         {
             if (pkcs11Uri == null)
@@ -80,8 +104,14 @@ namespace Net.Pkcs11Interop.URI
 
         #region Properties and variables
 
+        /// <summary>
+        /// Flag indicating whether max lengths of path attribute values are checked
+        /// </summary>
         private bool _checkLengths = true;
 
+        /// <summary>
+        /// Flag indicating whether max lengths of path attribute values are checked
+        /// </summary>
         public bool ChecksLengths
         {
             get
@@ -92,10 +122,19 @@ namespace Net.Pkcs11Interop.URI
 
         #region Path attributes
 
+        /// <summary>
+        /// Value of path attribute "token" encoded for PKCS#11 URI
+        /// </summary>
         private string _tokenEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "token" that corresponds to the "label" member of the CK_TOKEN_INFO structure
+        /// </summary>
         private string _token = null;
 
+        /// <summary>
+        /// Value of path attribute "token" that corresponds to the "label" member of the CK_TOKEN_INFO structure
+        /// </summary>
         public string Token
         {
             get
@@ -121,10 +160,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "manufacturer" encoded for PKCS#11 URI
+        /// </summary>
         private string _manufacturerEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "manufacturer" that corresponds to the "manufacturerID" member of CK_TOKEN_INFO structure
+        /// </summary>
         private string _manufacturer = null;
 
+        /// <summary>
+        /// Value of path attribute "manufacturer" that corresponds to the "manufacturerID" member of CK_TOKEN_INFO structure
+        /// </summary>
         public string Manufacturer
         {
             get
@@ -150,10 +198,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "serial" encoded for PKCS#11 URI
+        /// </summary>
         private string _serialEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "serial" that corresponds to the "serialNumber" member of CK_TOKEN_INFO structure
+        /// </summary>
         private string _serial = null;
 
+        /// <summary>
+        /// Value of path attribute "serial" that corresponds to the "serialNumber" member of CK_TOKEN_INFO structure
+        /// </summary>
         public string Serial
         {
             get
@@ -179,10 +236,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "model" encoded for PKCS#11 URI
+        /// </summary>
         private string _modelEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "model" that corresponds to the "model" member of CK_TOKEN_INFO structure
+        /// </summary>
         private string _model = null;
 
+        /// <summary>
+        /// Value of path attribute "model" that corresponds to the "model" member of CK_TOKEN_INFO structure
+        /// </summary>
         public string Model
         {
             get
@@ -208,10 +274,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "library-manufacturer" encoded for PKCS#11 URI
+        /// </summary>
         private string _libraryManufacturerEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "library-manufacturer" that corresponds to the "manufacturerID" member of CK_INFO structure
+        /// </summary>
         private string _libraryManufacturer = null;
 
+        /// <summary>
+        /// Value of path attribute "library-manufacturer" that corresponds to the "manufacturerID" member of CK_INFO structure
+        /// </summary>
         public string LibraryManufacturer
         {
             get
@@ -237,10 +312,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "library-description" encoded for PKCS#11 URI
+        /// </summary>
         private string _libraryDescriptionEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "library-description" that corresponds to the "libraryDescription" member of CK_INFO structure
+        /// </summary>
         private string _libraryDescription = null;
 
+        /// <summary>
+        /// Value of path attribute "library-description" that corresponds to the "libraryDescription" member of CK_INFO structure
+        /// </summary>
         public string LibraryDescription
         {
             get
@@ -266,10 +350,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "library-version" encoded for PKCS#11 URI
+        /// </summary>
         private string _libraryVersionEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "library-version" that corresponds to the "libraryVersion" member of CK_INFO structure
+        /// </summary>
         private string _libraryVersion = null;
 
+        /// <summary>
+        /// Value of path attribute "library-version" that corresponds to the "libraryVersion" member of CK_INFO structure
+        /// </summary>
         public string LibraryVersion
         {
             get
@@ -338,10 +431,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "object" encoded for PKCS#11 URI
+        /// </summary>
         private string _objectEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "object" that corresponds to the "CKA_LABEL" object attribute
+        /// </summary>
         private string _object = null;
 
+        /// <summary>
+        /// Value of path attribute "object" that corresponds to the "CKA_LABEL" object attribute
+        /// </summary>
         public string Object
         {
             get
@@ -365,10 +467,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "type" encoded for PKCS#11 URI
+        /// </summary>
         private string _typeEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "type" that corresponds to the "CKA_CLASS" object attribute
+        /// </summary>
         private CKO? _type = null;
 
+        /// <summary>
+        /// Value of path attribute "type" that corresponds to the "CKA_CLASS" object attribute
+        /// </summary>
         public CKO? Type
         {
             get
@@ -415,10 +526,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of path attribute "id" encoded for PKCS#11 URI
+        /// </summary>
         private string _idEncoded = null;
 
+        /// <summary>
+        /// Value of path attribute "id" that corresponds to the "CKA_ID" object attribute
+        /// </summary>
         private byte[] _id = null;
 
+        /// <summary>
+        /// Value of path attribute "id" that corresponds to the "CKA_ID" object attribute
+        /// </summary>
         public byte[] Id
         {
             get
@@ -432,8 +552,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Collection of unknown vendor specific path attributes that is validated when ToString() or ToPkcs11Uri() method is called
+        /// </summary>
         private Dictionary<string, string> _unknownPathAttributes = null;
 
+        /// <summary>
+        /// Collection of unknown vendor specific path attributes that is validated when ToString() or ToPkcs11Uri() method is called
+        /// </summary>
         public Dictionary<string, string> UnknownPathAttributes
         {
             get
@@ -446,6 +572,10 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Encodes collection of unknown vendor specific path attributes for PKCS#11 URI
+        /// </summary>
+        /// <returns>List of unknown vendor specific path attributes encoded for PKCS#11 URI</returns>
         private List<string> EncodeUnknownPathAttributes()
         {
             if (_unknownPathAttributes == null)
@@ -486,10 +616,19 @@ namespace Net.Pkcs11Interop.URI
 
         #region Query attributes
 
+        /// <summary>
+        /// Value of query attribute "pin-source" encoded for PKCS#11 URI
+        /// </summary>
         private string _pinSourceEncoded = null;
 
+        /// <summary>
+        /// Value of query attribute "pin-source" that specifies where token PIN can be obtained
+        /// </summary>
         private string _pinSource = null;
 
+        /// <summary>
+        /// Value of query attribute "pin-source" that specifies where token PIN can be obtained
+        /// </summary>
         public string PinSource
         {
             get
@@ -513,10 +652,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-pin-value" encoded for PKCS#11 URI
+        /// </summary>
         private string _xPinValueEncoded = null;
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-pin-value" that contains token PIN
+        /// </summary>
         private string _xPinValue = null;
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-pin-value" that contains token PIN
+        /// </summary>
         public string XPinValue
         {
             get
@@ -540,10 +688,19 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-library-path" encoded for PKCS#11 URI
+        /// </summary>
         private string _xLibraryPathEncoded = null;
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-library-path" that specifies name of (or path to) the PKCS#11 library
+        /// </summary>
         private string _xLibraryPath = null;
 
+        /// <summary>
+        /// Value of vendor specific query attribute "x-library-path" that specifies name of (or path to) the PKCS#11 library
+        /// </summary>
         public string XLibraryPath
         {
             get
@@ -571,8 +728,14 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Collection of unknown vendor specific query attributes that is validated when ToString() or ToPkcs11Uri() method is called
+        /// </summary>
         private Dictionary<string, List<string>> _unknownQueryAttributes = null;
 
+        /// <summary>
+        /// Collection of unknown vendor specific query attributes that is validated when ToString() or ToPkcs11Uri() method is called
+        /// </summary>
         public Dictionary<string, List<string>> UnknownQueryAttributes
         {
             get
@@ -585,6 +748,10 @@ namespace Net.Pkcs11Interop.URI
             }
         }
 
+        /// <summary>
+        /// Encodes collection of unknown vendor specific query attributes for PKCS#11 URI
+        /// </summary>
+        /// <returns>List of unknown vendor specific query attributes encoded for PKCS#11 URI</returns>
         private List<string> EncodeUnknownQueryAttributes()
         {
             if (_unknownQueryAttributes == null)
@@ -636,6 +803,10 @@ namespace Net.Pkcs11Interop.URI
 
         #endregion
 
+        /// <summary>
+        /// Generates PKCS#11 URI representing contents of Pkcs11UriBuilder instance
+        /// </summary>
+        /// <returns>PKCS#11 URI representing contents of Pkcs11UriBuilder instance</returns>
         public override string ToString()
         {
             List<string> pathAttributes = new List<string>();
@@ -689,6 +860,10 @@ namespace Net.Pkcs11Interop.URI
             return uri;
         }
 
+        /// <summary>
+        /// Converts Pkcs11UriBuilder instance to Pkcs11Uri instance
+        /// </summary>
+        /// <returns>Pkcs11Uri instance representing contents of Pkcs11UriBuilder instance</returns>
         public Pkcs11Uri ToPkcs11Uri()
         {
             return new Pkcs11Uri(ToString(), _checkLengths);
@@ -696,6 +871,11 @@ namespace Net.Pkcs11Interop.URI
 
         #region Private methods
 
+        /// <summary>
+        /// Percent encodes provided byte array
+        /// </summary>
+        /// <param name="byteArray">Byte array that should be encoded</param>
+        /// <returns>Percent encoded byte array</returns>
         private string PctEncodeByteArray(byte[] byteArray)
         {
             if (byteArray == null)
@@ -712,26 +892,39 @@ namespace Net.Pkcs11Interop.URI
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// Percent encodes provided character
+        /// </summary>
+        /// <param name="character">Character that should be encoded</param>
+        /// <returns>Percent encoded character</returns>
         private string PctEncodeCharacter(char character)
         {
             byte[] bytes = UTF8Encoding.UTF8.GetBytes(new char[] { character });
             return PctEncodeByteArray(bytes);
         }
 
-        private string EncodePk11String(string attributeName, string attributeValue, char[] allowedChars, bool usePctEncoding)
+        /// <summary>
+        /// Checks whether Pk11String contains invalid characters and optionaly percent encodes invalid characters
+        /// </summary>
+        /// <param name="attributeName">Name of attribute whose value is being encoded</param>
+        /// <param name="pk11String">Pk11String that should be encoded</param>
+        /// <param name="allowedChars">Characters allowed to be present unencoded in Pk11String</param>
+        /// <param name="usePctEncoding">Flag indicating whether invalid characters should be percent encoded</param>
+        /// <returns>Encoded Pk11String</returns>
+        private string EncodePk11String(string attributeName, string pk11String, char[] allowedChars, bool usePctEncoding)
         {
-            if (string.IsNullOrEmpty(attributeValue))
-                return attributeValue;
+            if (string.IsNullOrEmpty(pk11String))
+                return pk11String;
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            for (int i = 0; i < attributeValue.Length; i++)
+            for (int i = 0; i < pk11String.Length; i++)
             {
                 bool allowedChar = false;
 
                 for (int j = 0; j < allowedChars.Length; j++)
                 {
-                    if (attributeValue[i] == allowedChars[j])
+                    if (pk11String[i] == allowedChars[j])
                     {
                         allowedChar = true;
                         break;
@@ -740,13 +933,13 @@ namespace Net.Pkcs11Interop.URI
 
                 if (allowedChar)
                 {
-                    stringBuilder.Append(attributeValue[i]);
+                    stringBuilder.Append(pk11String[i]);
                 }
                 else
                 {
                     if (usePctEncoding == true)
                     {
-                        stringBuilder.Append(PctEncodeCharacter(attributeValue[i]));
+                        stringBuilder.Append(PctEncodeCharacter(pk11String[i]));
                     }
                     else
                     {
