@@ -1,1 +1,2 @@
-﻿TODO
+﻿Pkcs11Interop.URI 1.0 (2014-01-02)
+ - Initial stable release

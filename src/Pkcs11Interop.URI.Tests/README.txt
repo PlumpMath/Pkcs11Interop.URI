@@ -1,7 +1,13 @@
 ﻿Preparing the testing environment
 *********************************
 
-TODO
+1.  Edit the value of _pkcs11LibraryPath variable in 
+    Net.Pkcs11Interop.URI.Tests.Pkcs11UriAndBuilderTest class 
+    stored in Pkcs11UriAndBuilderTest.cs file to suit your needs.
+2.  Edit PKCS#11 URIs in Pkcs11UriÏnSignatureCreationApplication() method
+    of Net.Pkcs11Interop.URI.Tests.Pkcs11UriAndBuilderExample class 
+    stored in Pkcs11UriAndBuilderExample.cs file to suit your needs.
+3.  Rebuild and run the tests.
 
 Converting NUnit test project to Visual Studio UnitTests
 ********************************************************

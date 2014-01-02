@@ -118,5 +118,5 @@
 
 
 /*!
- * \example Pkcs11UriExample.cs
+ * \example Pkcs11UriAndBuilderExample.cs
  */

@@ -89,8 +89,7 @@ namespace Net.Pkcs11Interop.URI
             {
                 return (LibraryManufacturer != null ||
                         LibraryDescription != null ||
-                        LibraryVersion != null ||
-                        XLibraryPath != null);
+                        LibraryVersion != null);
             }
         }
 

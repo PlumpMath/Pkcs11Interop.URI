@@ -25,13 +25,16 @@ using LLA8 = Net.Pkcs11Interop.LowLevelAPI8;
 
 namespace Net.Pkcs11Interop.URI.Tests
 {
+    /// <summary>
+    /// Unit tests that verify Pkcs11Uri and Pkcs11UriBuilder implementation
+    /// </summary>
     [TestFixture()]
     public class Pkcs11UriAndBuilderTest
     {
         #region Test settings
 
         /// <summary>
-        /// Unmanaged PKCS#11 library path
+        /// Path to the unmanaged PKCS#11 library that should be used by unit tests
         /// </summary>
         private static string _pkcs11LibraryPath = @"siecap11.dll";
 
@@ -264,7 +267,7 @@ namespace Net.Pkcs11Interop.URI.Tests
 
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
-            Assert.IsTrue(pkcs11uri.DefinesLibrary == true);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.UnknownPathAttributes == null);
@@ -2054,7 +2057,7 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
 
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
-            Assert.IsTrue(pkcs11uri.DefinesLibrary == true);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.XLibraryPath == _pk11QueryChars + _unicodeChar);
