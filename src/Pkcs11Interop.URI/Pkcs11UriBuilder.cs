@@ -460,7 +460,6 @@ namespace Net.Pkcs11Interop.URI
                 else
                 {
                     string attributeName = Pkcs11UriSpec.Pk11Object;
-                    byte[] attributeValue = ConvertUtils.Utf8StringToBytes(value);
                     _objectEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
                     _object = value;
                 }
@@ -645,7 +644,6 @@ namespace Net.Pkcs11Interop.URI
                 else
                 {
                     string attributeName = Pkcs11UriSpec.Pk11PinSource;
-                    byte[] attributeValue = ConvertUtils.Utf8StringToBytes(value);
                     _pinSourceEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
                     _pinSource = value;
                 }
@@ -681,7 +679,6 @@ namespace Net.Pkcs11Interop.URI
                 else
                 {
                     string attributeName = Pkcs11UriSpec.Pk11XPinValue;
-                    byte[] attributeValue = ConvertUtils.Utf8StringToBytes(value);
                     _xPinValueEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
                     _xPinValue = value;
                 }
@@ -721,7 +718,6 @@ namespace Net.Pkcs11Interop.URI
                     if (value == string.Empty)
                         throw new Pkcs11UriException("Value of " + attributeName + " attribute cannot be empty");
                     
-                    byte[] attributeValue = ConvertUtils.Utf8StringToBytes(value);
                     _xLibraryPathEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
                     _xLibraryPath = value;
                 }
