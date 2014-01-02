@@ -81,7 +81,7 @@ namespace Net.Pkcs11Interop.URI
         #region Flags
         
         /// <summary>
-        /// Flag indicating whether PKCS#11 URI defines specific PKCS#11 library
+        /// Flag indicating whether PKCS#11 URI path attributes define specific PKCS#11 library
         /// </summary>
         public bool DefinesLibrary
         {
@@ -94,7 +94,7 @@ namespace Net.Pkcs11Interop.URI
         }
 
         /// <summary>
-        /// Flag indicating whether PKCS#11 URI defines specific token
+        /// Flag indicating whether PKCS#11 URI path attributes define specific token
         /// </summary>
         public bool DefinesToken
         {
@@ -108,7 +108,7 @@ namespace Net.Pkcs11Interop.URI
         }
 
         /// <summary>
-        /// Flag indicating whether PKCS#11 URI defines specific object
+        /// Flag indicating whether PKCS#11 URI path attributes define specific object
         /// </summary>
         public bool DefinesObject
         {
