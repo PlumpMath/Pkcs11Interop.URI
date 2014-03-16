@@ -8,7 +8,7 @@
  * 
  * <a href="http://www.pkcs11interop.net">Pkcs11interop</a> is managed library written in C# that brings full power of PKCS#11 API to the .NET environment. It uses System.Runtime.InteropServices to define platform invoke methods for accessing unmanaged PKCS#11 API and specifies how data is marshaled between managed and unmanaged memory. Pkcs11Interop library supports both 32-bit and 64-bit platforms and can be used with <a href="http://www.microsoft.com/net">.NET Framework</a> 2.0 or higher on Microsoft Windows or with <a href="http://www.mono-project.com/">Mono</a> on Linux, Mac OS X, BSD and others.
  * 
- * <a href="http://www.pkcs11interop.net/extensions/uri/">Pkcs11Interop.URI</a> extends Pkcs11Interop with a support for <a href="https://datatracker.ietf.org/doc/draft-pechanec-pkcs11uri/">PKCS#11 URI scheme</a> - an emerging standard for identifying PKCS#11 objects stored in PKCS#11 tokens.
+ * <a href="https://github.com/jariq/Pkcs11Interop.URI">Pkcs11Interop.URI</a> extends Pkcs11Interop with a support for <a href="https://datatracker.ietf.org/doc/draft-pechanec-pkcs11uri/">PKCS#11 URI scheme</a> - an emerging standard for identifying PKCS#11 objects stored in PKCS#11 tokens.
  * 
  * \section sec_library_desing Library design
  * 
