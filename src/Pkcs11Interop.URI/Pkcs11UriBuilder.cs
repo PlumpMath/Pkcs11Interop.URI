@@ -95,8 +95,9 @@ namespace Net.Pkcs11Interop.URI
             UnknownPathAttributes = pkcs11Uri.UnknownPathAttributes;
 
             PinSource = pkcs11Uri.PinSource;
-            XPinValue = pkcs11Uri.XPinValue;
-            XLibraryPath = pkcs11Uri.XLibraryPath;
+            PinValue = pkcs11Uri.PinValue;
+            ModuleName = pkcs11Uri.ModuleName;
+            ModulePath = pkcs11Uri.ModulePath;
             UnknownQueryAttributes = pkcs11Uri.UnknownQueryAttributes;
         }
 
@@ -651,75 +652,106 @@ namespace Net.Pkcs11Interop.URI
         }
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-pin-value" encoded for PKCS#11 URI
+        /// Value of query attribute "pin-value" encoded for PKCS#11 URI
         /// </summary>
-        private string _xPinValueEncoded = null;
+        private string _pinValueEncoded = null;
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-pin-value" that contains token PIN
+        /// Value of query attribute "pin-value" that contains token PIN
         /// </summary>
-        private string _xPinValue = null;
+        private string _pinValue = null;
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-pin-value" that contains token PIN
+        /// Value of query attribute "pin-value" that contains token PIN
         /// </summary>
-        public string XPinValue
+        public string PinValue
         {
             get
             {
-                return _xPinValue;
+                return _pinValue;
             }
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    _xPinValue = value;
-                    _xPinValueEncoded = value;
+                    _pinValue = value;
+                    _pinValueEncoded = value;
                 }
                 else
                 {
-                    string attributeName = Pkcs11UriSpec.Pk11XPinValue;
-                    _xPinValueEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
-                    _xPinValue = value;
+                    string attributeName = Pkcs11UriSpec.Pk11PinValue;
+                    _pinValueEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
+                    _pinValue = value;
                 }
             }
         }
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-library-path" encoded for PKCS#11 URI
+        /// Value of query attribute "module-name" encoded for PKCS#11 URI
         /// </summary>
-        private string _xLibraryPathEncoded = null;
+        private string _moduleNameEncoded = null;
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-library-path" that specifies name of (or path to) the PKCS#11 library
+        /// Value of query attribute "module-name" that specifies name of the PKCS#11 library
         /// </summary>
-        private string _xLibraryPath = null;
+        private string _moduleName = null;
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-library-path" that specifies name of (or path to) the PKCS#11 library
+        /// Value of query attribute "module-name" that specifies name of the PKCS#11 library
         /// </summary>
-        public string XLibraryPath
+        public string ModuleName
         {
             get
             {
-                return _xLibraryPath;
+                return _moduleName;
             }
             set
             {
-                if (value == null)
+                if (string.IsNullOrEmpty(value))
                 {
-                    _xLibraryPath = value;
-                    _xLibraryPathEncoded = value;
+                    _moduleName = value;
+                    _moduleNameEncoded = value;
                 }
                 else
                 {
-                    string attributeName = Pkcs11UriSpec.Pk11XLibraryPath;
+                    string attributeName = Pkcs11UriSpec.Pk11ModuleName;
+                    _moduleNameEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
+                    _moduleName = value;
+                }
+            }
+        }
 
-                    if (value == string.Empty)
-                        throw new Pkcs11UriException("Value of " + attributeName + " attribute cannot be empty");
-                    
-                    _xLibraryPathEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
-                    _xLibraryPath = value;
+        /// <summary>
+        /// Value of query attribute "module-path" encoded for PKCS#11 URI
+        /// </summary>
+        private string _modulePathEncoded = null;
+
+        /// <summary>
+        /// Value of query attribute "module-path" that specifies path to the PKCS#11 library
+        /// </summary>
+        private string _modulePath = null;
+
+        /// <summary>
+        /// Value of query attribute "module-path" that specifies path to the PKCS#11 library
+        /// </summary>
+        public string ModulePath
+        {
+            get
+            {
+                return _modulePath;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    _modulePath = value;
+                    _modulePathEncoded = value;
+                }
+                else
+                {
+                    string attributeName = Pkcs11UriSpec.Pk11ModulePath;
+                    _modulePathEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
+                    _modulePath = value;
                 }
             }
         }
@@ -835,11 +867,13 @@ namespace Net.Pkcs11Interop.URI
 
             List<string> queryAttributes = new List<string>();
             // Library definition
-            if (_xLibraryPath != null)
-                queryAttributes.Add(Pkcs11UriSpec.Pk11XLibraryPath + Pkcs11UriSpec.Pk11QueryAttributeNameAndValueSeparator + _xLibraryPathEncoded);
+            if (_modulePath != null)
+                queryAttributes.Add(Pkcs11UriSpec.Pk11ModulePath + Pkcs11UriSpec.Pk11QueryAttributeNameAndValueSeparator + _modulePathEncoded);
+            if (_moduleName != null)
+                queryAttributes.Add(Pkcs11UriSpec.Pk11ModuleName + Pkcs11UriSpec.Pk11QueryAttributeNameAndValueSeparator + _moduleNameEncoded);
             // PIN handling definition
-            if (_xPinValueEncoded != null)
-                queryAttributes.Add(Pkcs11UriSpec.Pk11XPinValue + Pkcs11UriSpec.Pk11QueryAttributeNameAndValueSeparator + _xPinValueEncoded);
+            if (_pinValueEncoded != null)
+                queryAttributes.Add(Pkcs11UriSpec.Pk11PinValue + Pkcs11UriSpec.Pk11QueryAttributeNameAndValueSeparator + _pinValueEncoded);
             if (_pinSourceEncoded != null)
                 queryAttributes.Add(Pkcs11UriSpec.Pk11PinSource + Pkcs11UriSpec.Pk11QueryAttributeNameAndValueSeparator + _pinSourceEncoded);
             // Vendor specific attributes

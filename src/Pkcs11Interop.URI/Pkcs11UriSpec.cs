@@ -186,19 +186,24 @@ namespace Net.Pkcs11Interop.URI
         internal const string Pk11PinSource = "pin-source";
 
         /// <summary>
+        /// Name of "pin-value" query attribute
+        /// </summary>
+        internal const string Pk11PinValue = "pin-value";
+
+        /// <summary>
+        /// Name of "module-name" query attribute
+        /// </summary>
+        internal const string Pk11ModuleName = "module-name";
+
+        /// <summary>
+        /// Name of "module-path" query attribute
+        /// </summary>
+        internal const string Pk11ModulePath = "module-path";
+
+        /// <summary>
         /// Prefix of vendor specific query attribute name
         /// </summary>
         internal const string Pk11QueryVendorPrefix = "x-";
-
-        /// <summary>
-        /// Name of vendor specific "x-pin-value" query attribute
-        /// </summary>
-        internal const string Pk11XPinValue = "x-pin-value";
-
-        /// <summary>
-        /// Name of vendor specific "x-library-path" query attribute
-        /// </summary>
-        internal const string Pk11XLibraryPath = "x-library-path";
 
         /// <summary>
         /// Static constructor for Net.Pkcs11Interop.URI.Pkcs11UriSpec class
@@ -229,7 +234,7 @@ namespace Net.Pkcs11Interop.URI
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', // RFC 3986 unreserved
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', // RFC 3986 unreserved
                 '-', '.', '_', '~',  // RFC 3986 unreserved
-                ':', '[', ']', '@', '!', '$', '\'', '(', ')', '*', '+', ',', '=', '/', '?' // pk11-query-res-avail
+                ':', '[', ']', '@', '!', '$', '\'', '(', ')', '*', '+', ',', '=', '/', '?', '|' // pk11-query-res-avail
                 // pct-encoded characters are handled in Pkcs11Uri class
             };
         }

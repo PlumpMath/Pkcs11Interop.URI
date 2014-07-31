@@ -435,34 +435,50 @@ namespace Net.Pkcs11Interop.URI
         }
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-pin-value" that contains token PIN
+        /// Value of query attribute "pin-value" that contains token PIN
         /// </summary>
-        private string _xPinValue = null;
+        private string _pinValue = null;
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-pin-value" that contains token PIN
+        /// Value of query attribute "pin-value" that contains token PIN
         /// </summary>
-        public string XPinValue
+        public string PinValue
         {
             get
             {
-                return _xPinValue;
+                return _pinValue;
             }
         }
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-library-path" that specifies name of (or path to) the PKCS#11 library
+        /// Value of query attribute "module-name" that specifies name of the PKCS#11 library
         /// </summary>
-        private string _xLibraryPath = null;
+        private string _moduleName = null;
 
         /// <summary>
-        /// Value of vendor specific query attribute "x-library-path" that specifies name of (or path to) the PKCS#11 library
+        /// Value of query attribute "module-name" that specifies name of the PKCS#11 library
         /// </summary>
-        public string XLibraryPath
+        public string ModuleName
         {
             get
             {
-                return _xLibraryPath;
+                return _moduleName;
+            }
+        }
+
+        /// <summary>
+        /// Value of query attribute "module-path" that specifies path to the PKCS#11 library
+        /// </summary>
+        private string _modulePath = null;
+
+        /// <summary>
+        /// Value of query attribute "module-path" that specifies path to the PKCS#11 library
+        /// </summary>
+        public string ModulePath
+        {
+            get
+            {
+                return _modulePath;
             }
         }
 
@@ -1653,38 +1669,55 @@ namespace Net.Pkcs11Interop.URI
 
                     break;
 
-                case Pkcs11UriSpec.Pk11XPinValue:
+                case Pkcs11UriSpec.Pk11PinValue:
 
-                    if (_xPinValue != null)
+                    if (_pinValue != null)
                         throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the query component");
 
                     if (attributeValue != string.Empty)
                     {
                         byte[] bytes = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
-                        _xPinValue = ConvertUtils.BytesToUtf8String(bytes);
+                        _pinValue = ConvertUtils.BytesToUtf8String(bytes);
                     }
                     else
                     {
-                        _xPinValue = string.Empty;
+                        _pinValue = string.Empty;
                     }
 
                     break;
 
-                case Pkcs11UriSpec.Pk11XLibraryPath:
+                case Pkcs11UriSpec.Pk11ModuleName:
 
-                    if (_xLibraryPath != null)
+                    if (_moduleName != null)
                         throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the query component");
 
                     if (attributeValue != string.Empty)
                     {
                         byte[] bytes = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
-                        _xLibraryPath = ConvertUtils.BytesToUtf8String(bytes);
+                        _moduleName = ConvertUtils.BytesToUtf8String(bytes);
                     }
                     else
                     {
-                        throw new Pkcs11UriException("Value of " + attributeName + " attribute cannot be empty");
+                        _moduleName = string.Empty;
                     }
-                    
+
+                    break;
+
+                case Pkcs11UriSpec.Pk11ModulePath:
+
+                    if (_modulePath != null)
+                        throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the query component");
+
+                    if (attributeValue != string.Empty)
+                    {
+                        byte[] bytes = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11QueryAttrValueChars, true);
+                        _modulePath = ConvertUtils.BytesToUtf8String(bytes);
+                    }
+                    else
+                    {
+                        _modulePath = string.Empty;
+                    }
+
                     break;
 
                 default:

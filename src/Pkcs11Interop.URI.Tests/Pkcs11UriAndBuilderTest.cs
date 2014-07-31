@@ -197,8 +197,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             Assert.IsTrue(pkcs11uri.Type == null);
             Assert.IsTrue(pkcs11uri.Object == null);
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, null));
-            Assert.IsTrue(pkcs11uri.XLibraryPath == null);
-            Assert.IsTrue(pkcs11uri.XPinValue == null);
+            Assert.IsTrue(pkcs11uri.ModulePath == null);
+            Assert.IsTrue(pkcs11uri.ModuleName == null);
+            Assert.IsTrue(pkcs11uri.PinValue == null);
             Assert.IsTrue(pkcs11uri.PinSource == null);
         }
 
@@ -210,8 +211,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             uri += @"manufacturer=foo;model=bar;serial=foo;token=bar;";
             uri += @"type=private;object=foo;id=%62%61%72";
             uri += @"?";
-            uri += @"x-library-path=foo&x-pin-value=bar&pin-source=foo";
-            
+            uri += @"module-path=foo&module-name=bar&";
+            uri += @"pin-value=foo&pin-source=bar";
+
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
             pkcs11UriBuilder.LibraryManufacturer = "foo";
@@ -224,9 +226,10 @@ namespace Net.Pkcs11Interop.URI.Tests
             pkcs11UriBuilder.Type = CKO.CKO_PRIVATE_KEY;
             pkcs11UriBuilder.Object = "foo";
             pkcs11UriBuilder.Id = ConvertUtils.Utf8StringToBytes("bar");
-            pkcs11UriBuilder.XLibraryPath = "foo";
-            pkcs11UriBuilder.XPinValue = "bar";
-            pkcs11UriBuilder.PinSource = "foo";
+            pkcs11UriBuilder.ModulePath = "foo";
+            pkcs11UriBuilder.ModuleName = "bar";
+            pkcs11UriBuilder.PinValue = "foo";
+            pkcs11UriBuilder.PinSource = "bar";
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
@@ -246,9 +249,10 @@ namespace Net.Pkcs11Interop.URI.Tests
             Assert.IsTrue(pkcs11uri.Type == CKO.CKO_PRIVATE_KEY);
             Assert.IsTrue(pkcs11uri.Object == "foo");
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, ConvertUtils.Utf8StringToBytes("bar")));
-            Assert.IsTrue(pkcs11uri.XLibraryPath == "foo");
-            Assert.IsTrue(pkcs11uri.XPinValue == "bar");
-            Assert.IsTrue(pkcs11uri.PinSource == "foo");
+            Assert.IsTrue(pkcs11uri.ModulePath == "foo");
+            Assert.IsTrue(pkcs11uri.ModuleName == "bar");
+            Assert.IsTrue(pkcs11uri.PinValue == "foo");
+            Assert.IsTrue(pkcs11uri.PinSource == "bar");
         }
 
         [Test()]
@@ -256,13 +260,15 @@ namespace Net.Pkcs11Interop.URI.Tests
         {
             string uri = @"pkcs11:";
             uri += @"?";
-            uri += @"x-library-path=foo&x-pin-value=bar&pin-source=foo";
+            uri += @"module-path=foo&module-name=bar&";
+            uri += @"pin-value=foo&pin-source=bar";
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
-            pkcs11UriBuilder.XLibraryPath = "foo";
-            pkcs11UriBuilder.XPinValue = "bar";
-            pkcs11UriBuilder.PinSource = "foo";
+            pkcs11UriBuilder.ModulePath = "foo";
+            pkcs11UriBuilder.ModuleName = "bar";
+            pkcs11UriBuilder.PinValue = "foo";
+            pkcs11UriBuilder.PinSource = "bar";
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
@@ -282,9 +288,10 @@ namespace Net.Pkcs11Interop.URI.Tests
             Assert.IsTrue(pkcs11uri.Type == null);
             Assert.IsTrue(pkcs11uri.Object == null);
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, null));
-            Assert.IsTrue(pkcs11uri.XLibraryPath == "foo");
-            Assert.IsTrue(pkcs11uri.XPinValue == "bar");
-            Assert.IsTrue(pkcs11uri.PinSource == "foo");
+            Assert.IsTrue(pkcs11uri.ModulePath == "foo");
+            Assert.IsTrue(pkcs11uri.ModuleName == "bar");
+            Assert.IsTrue(pkcs11uri.PinValue == "foo");
+            Assert.IsTrue(pkcs11uri.PinSource == "bar");
         }
 
         [Test()]
@@ -326,8 +333,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             Assert.IsTrue(pkcs11uri.Type == CKO.CKO_PRIVATE_KEY);
             Assert.IsTrue(pkcs11uri.Object == "foo");
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, ConvertUtils.Utf8StringToBytes("bar")));
-            Assert.IsTrue(pkcs11uri.XLibraryPath == null);
-            Assert.IsTrue(pkcs11uri.XPinValue == null);
+            Assert.IsTrue(pkcs11uri.ModulePath == null);
+            Assert.IsTrue(pkcs11uri.ModuleName == null);
+            Assert.IsTrue(pkcs11uri.PinValue == null);
             Assert.IsTrue(pkcs11uri.PinSource == null);
         }
 
@@ -402,7 +410,7 @@ namespace Net.Pkcs11Interop.URI.Tests
 library-manufacturer=foo;                library-description=bar;library-version=1;
 manufacturer=foo;model=bar; serial=foo;token=bar;
 
-type=private;object=foo;id=%62%61%72    ?    x-library-path=foo&x-pin-value=bar&pin-source=foo";
+type=private;object=foo;id=%62%61%72    ?    module-path=foo&module-name=bar&pin-value=foo&pin-source=bar";
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -423,9 +431,10 @@ type=private;object=foo;id=%62%61%72    ?    x-library-path=foo&x-pin-value=bar&
             Assert.IsTrue(pkcs11uri.Type == CKO.CKO_PRIVATE_KEY);
             Assert.IsTrue(pkcs11uri.Object == "foo");
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, ConvertUtils.Utf8StringToBytes("bar")));
-            Assert.IsTrue(pkcs11uri.XLibraryPath == "foo");
-            Assert.IsTrue(pkcs11uri.XPinValue == "bar");
-            Assert.IsTrue(pkcs11uri.PinSource == "foo");
+            Assert.IsTrue(pkcs11uri.ModulePath == "foo");
+            Assert.IsTrue(pkcs11uri.ModuleName == "bar");
+            Assert.IsTrue(pkcs11uri.PinValue == "foo");
+            Assert.IsTrue(pkcs11uri.PinSource == "bar");
         }
 
         [Test()]
@@ -437,10 +446,11 @@ egestas et. Duis tincidunt ut magna nec tincidunt. In vitae arcu convallis, temp
 id, tincidunt eros. Ut tristique, nisi eget suscipit mollis, diam quam vehicula risus, 
 eget tristique nunc est dapibus dolor. Vestibulum vehicula vel velit luctus tincidunt. 
 <pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;manufacturer
-=foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?x-library-path
-=foo&x-pin-value=bar&pin-source=foo> In volutpat laoreet auctor. Nam convallis dignissim 
-purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu egestas nisl. Quisque non 
-egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibendum.";
+=foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?module-path
+=foo&module-name=bar&pin-value=foo&pin-source=bar> In volutpat laoreet auctor. Nam 
+convallis dignissim purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu 
+egestas nisl. Quisque non egestas turpis, nec tincidunt mauris. Pellentesque elementum 
+sollicitudin bibendum.";
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -461,9 +471,10 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
             Assert.IsTrue(pkcs11uri.Type == CKO.CKO_PRIVATE_KEY);
             Assert.IsTrue(pkcs11uri.Object == "foo");
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, ConvertUtils.Utf8StringToBytes("bar")));
-            Assert.IsTrue(pkcs11uri.XLibraryPath == "foo");
-            Assert.IsTrue(pkcs11uri.XPinValue == "bar");
-            Assert.IsTrue(pkcs11uri.PinSource == "foo");
+            Assert.IsTrue(pkcs11uri.ModulePath == "foo");
+            Assert.IsTrue(pkcs11uri.ModuleName == "bar");
+            Assert.IsTrue(pkcs11uri.PinValue == "foo");
+            Assert.IsTrue(pkcs11uri.PinSource == "bar");
         }
 
         [Test()]
@@ -475,10 +486,11 @@ egestas et. Duis tincidunt ut magna nec tincidunt. In vitae arcu convallis, temp
 id, tincidunt eros. Ut tristique, nisi eget suscipit mollis, diam quam vehicula risus, 
 eget tristique nunc est dapibus dolor. Vestibulum vehicula vel velit luctus tincidunt. 
 ""pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;manufacturer
-=foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?x-library-path
-=foo&x-pin-value=bar&pin-source=foo"" In volutpat laoreet auctor. Nam convallis dignissim 
-purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu egestas nisl. Quisque non 
-egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibendum.";
+=foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?module-path
+=foo&module-name=bar&pin-value=foo&pin-source=bar"" In volutpat laoreet auctor. Nam 
+convallis dignissim purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu 
+egestas nisl. Quisque non egestas turpis, nec tincidunt mauris. Pellentesque elementum 
+sollicitudin bibendum.";
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -499,9 +511,10 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
             Assert.IsTrue(pkcs11uri.Type == CKO.CKO_PRIVATE_KEY);
             Assert.IsTrue(pkcs11uri.Object == "foo");
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, ConvertUtils.Utf8StringToBytes("bar")));
-            Assert.IsTrue(pkcs11uri.XLibraryPath == "foo");
-            Assert.IsTrue(pkcs11uri.XPinValue == "bar");
-            Assert.IsTrue(pkcs11uri.PinSource == "foo");
+            Assert.IsTrue(pkcs11uri.ModulePath == "foo");
+            Assert.IsTrue(pkcs11uri.ModuleName == "bar");
+            Assert.IsTrue(pkcs11uri.PinValue == "foo");
+            Assert.IsTrue(pkcs11uri.PinSource == "bar");
         }
 
         [Test()]
@@ -513,10 +526,11 @@ egestas et. Duis tincidunt ut magna nec tincidunt. In vitae arcu convallis, temp
 id, tincidunt eros. Ut tristique, nisi eget suscipit mollis, diam quam vehicula risus, 
 eget tristique nunc est dapibus dolor. Vestibulum vehicula vel velit luctus tincidunt. 
 pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;manufacturer
-=foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?x-library-path
-=foo&x-pin-value=bar&pin-source=foo In volutpat laoreet auctor. Nam convallis dignissim 
-purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu egestas nisl. Quisque non 
-egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibendum.";
+=foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?module-path
+=foo&module-name=bar&pin-value=foo&pin-source=bar In volutpat laoreet auctor. Nam 
+convallis dignissim purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu 
+egestas nisl. Quisque non egestas turpis, nec tincidunt mauris. Pellentesque elementum 
+sollicitudin bibendum.";
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -1965,16 +1979,16 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
 
         #endregion
 
-        #region XPinValue
+        #region PinValue
 
         [Test()]
-        public void XPinValueWithValidValue()
+        public void PinValueWithValidValue()
         {
-            string uri = @"pkcs11:?x-pin-value=" + _pk11QueryChars + _pctEncodedUnicodeChar;
+            string uri = @"pkcs11:?pin-value=" + _pk11QueryChars + _pctEncodedUnicodeChar;
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
-            pkcs11UriBuilder.XPinValue = _pk11QueryChars + _unicodeChar;
+            pkcs11UriBuilder.PinValue = _pk11QueryChars + _unicodeChar;
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
@@ -1982,13 +1996,13 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
-            Assert.IsTrue(pkcs11uri.XPinValue == _pk11QueryChars + _unicodeChar);
+            Assert.IsTrue(pkcs11uri.PinValue == _pk11QueryChars + _unicodeChar);
         }
 
         [Test()]
-        public void XPinValueWithInvalidValue()
+        public void PinValueWithInvalidValue()
         {
-            string uri = @"pkcs11:?x-pin-value=foobar" + _unicodeChar;
+            string uri = @"pkcs11:?pin-value=foobar" + _unicodeChar;
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -2005,13 +2019,13 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
         }
 
         [Test()]
-        public void XPinValueWithoutValue()
+        public void PinValueWithoutValue()
         {
-            string uri = @"pkcs11:?x-pin-value=";
+            string uri = @"pkcs11:?pin-value=";
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
-            pkcs11UriBuilder.XPinValue = string.Empty;
+            pkcs11UriBuilder.PinValue = string.Empty;
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
@@ -2019,13 +2033,13 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
-            Assert.IsTrue(pkcs11uri.XPinValue == string.Empty);
+            Assert.IsTrue(pkcs11uri.PinValue == string.Empty);
         }
 
         [Test()]
-        public void XPinValueWithMultipleValues()
+        public void PinValueWithMultipleValues()
         {
-            string uri = @"pkcs11:?x-pin-value=foo&x-pin-value=bar";
+            string uri = @"pkcs11:?pin-value=foo&pin-value=bar";
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -2043,16 +2057,16 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
 
         #endregion
 
-        #region XLibraryPath
+        #region ModuleName
 
         [Test()]
-        public void XLibraryPathWithValidValue()
+        public void ModuleNameWithValidValue()
         {
-            string uri = @"pkcs11:?x-library-path=" + _pk11QueryChars + _pctEncodedUnicodeChar;
+            string uri = @"pkcs11:?module-name=" + _pk11QueryChars + _pctEncodedUnicodeChar;
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
-            pkcs11UriBuilder.XLibraryPath = _pk11QueryChars + _unicodeChar;
+            pkcs11UriBuilder.ModuleName = _pk11QueryChars + _unicodeChar;
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
@@ -2060,13 +2074,13 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
-            Assert.IsTrue(pkcs11uri.XLibraryPath == _pk11QueryChars + _unicodeChar);
+            Assert.IsTrue(pkcs11uri.ModuleName == _pk11QueryChars + _unicodeChar);
         }
 
         [Test()]
-        public void XLibraryPathWithInvalidValue()
+        public void ModuleNameWithInvalidValue()
         {
-            string uri = @"pkcs11:?x-library-path=foobar" + _unicodeChar;
+            string uri = @"pkcs11:?module-name=foobar" + _unicodeChar;
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -2083,21 +2097,70 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
         }
 
         [Test()]
-        public void XLibraryPathWithoutValue()
+        public void ModuleNameWithoutValue()
         {
-            string uri = @"pkcs11:?x-library-path=";
+            string uri = @"pkcs11:?module-name=";
+
+            // Build URI
+            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+            pkcs11UriBuilder.ModuleName = string.Empty;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.ModuleName == string.Empty);
+        }
+
+        [Test()]
+        public void ModuleNameWithMultipleValues()
+        {
+            string uri = @"pkcs11:?module-name=foo&module-name=bar";
+
+            // Note: Builder cannot be used to produce URI like this one
 
             try
             {
-                // Build URI
-                Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
-                pkcs11UriBuilder.XLibraryPath = string.Empty;
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
                 Assert.Fail("Exception expected but not thrown");
             }
             catch (Exception ex)
             {
                 Assert.IsTrue(ex is Pkcs11UriException);
             }
+        }
+
+        #endregion
+
+        #region ModulePath
+
+        [Test()]
+        public void ModulePathWithValidValue()
+        {
+            string uri = @"pkcs11:?module-path=" + _pk11QueryChars + _pctEncodedUnicodeChar;
+
+            // Build URI
+            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+            pkcs11UriBuilder.ModulePath = _pk11QueryChars + _unicodeChar;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.ModulePath == _pk11QueryChars + _unicodeChar);
+        }
+
+        [Test()]
+        public void ModulePathWithInvalidValue()
+        {
+            string uri = @"pkcs11:?module-path=foobar" + _unicodeChar;
+
+            // Note: Builder cannot be used to produce URI like this one
 
             try
             {
@@ -2112,9 +2175,27 @@ egestas turpis, nec tincidunt mauris. Pellentesque elementum sollicitudin bibend
         }
 
         [Test()]
-        public void XLibraryPathWithMultipleValues()
+        public void ModulePathWithoutValue()
         {
-            string uri = @"pkcs11:?x-library-path=foo&x-library-path=bar";
+            string uri = @"pkcs11:?module-path=";
+
+            // Build URI
+            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+            pkcs11UriBuilder.ModulePath = string.Empty;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.ModulePath == string.Empty);
+        }
+
+        [Test()]
+        public void ModulePathWithMultipleValues()
+        {
+            string uri = @"pkcs11:?module-path=foo&module-path=bar";
 
             // Note: Builder cannot be used to produce URI like this one
 

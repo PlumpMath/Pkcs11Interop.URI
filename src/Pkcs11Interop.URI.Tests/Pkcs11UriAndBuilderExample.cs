@@ -39,16 +39,16 @@ namespace Net.Pkcs11Interop.URI.Tests
             string uri = @"<pkcs11:serial=7BFF2737350B262C;
                             type=private;
                             object=John%20Doe
-                            ?x-pin-value=11111111&
-                            x-library-path=siecap11.dll>";
+                            ?module-path=siecap11.dll&
+                            pin-value=11111111>";
 
             // ...or it can be easily constructed with Pkcs11UriBuilder
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
             pkcs11UriBuilder.Serial = "7BFF2737350B262C";
             pkcs11UriBuilder.Type = CKO.CKO_PRIVATE_KEY;
             pkcs11UriBuilder.Object = "John Doe";
-            pkcs11UriBuilder.XPinValue = "11111111";
-            pkcs11UriBuilder.XLibraryPath = "siecap11.dll";
+            pkcs11UriBuilder.ModulePath = "siecap11.dll";
+            pkcs11UriBuilder.PinValue = "11111111";
             uri = pkcs11UriBuilder.ToString();
 
             // Warning: Please note that PIN stored in PKCS#11 URI can pose a security risk and therefore other options
@@ -79,17 +79,17 @@ namespace Net.Pkcs11Interop.URI.Tests
             Pkcs11Uri pkcs11Uri = new Pkcs11Uri(uri);
 
             // Verify that URI contains all information required to perform this operation
-            if (pkcs11Uri.XLibraryPath == null)
+            if (pkcs11Uri.ModulePath == null)
                 throw new Exception("PKCS#11 URI does not specify PKCS#11 library");
 
-            if (pkcs11Uri.XPinValue == null)
+            if (pkcs11Uri.PinValue == null)
                 throw new Exception("PKCS#11 URI does not specify PIN");
 
             if (!pkcs11Uri.DefinesObject || pkcs11Uri.Type != CKO.CKO_PRIVATE_KEY)
                 throw new Exception("PKCS#11 URI does not specify private key");
 
             // Load and initialize PKCS#11 library specified by URI
-            using (Pkcs11 pkcs11 = new Pkcs11(pkcs11Uri.XLibraryPath, true))
+            using (Pkcs11 pkcs11 = new Pkcs11(pkcs11Uri.ModulePath, true))
             {
                 //  Obtain a list of all slots with tokens that match URI
                 List<Slot> slots = pkcs11Uri.GetMatchingSlotList(pkcs11);
@@ -100,7 +100,7 @@ namespace Net.Pkcs11Interop.URI.Tests
                 using (Session session = slots[0].OpenSession(true))
                 {
                     // Login as normal user with PIN acquired from URI
-                    session.Login(CKU.CKU_USER, pkcs11Uri.XPinValue);
+                    session.Login(CKU.CKU_USER, pkcs11Uri.PinValue);
 
                     // Get list of object attributes for the private key specified by URI
                     List<ObjectAttribute> searchTemplate = null;
