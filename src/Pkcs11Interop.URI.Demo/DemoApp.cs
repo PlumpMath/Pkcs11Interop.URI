@@ -1,7 +1,7 @@
 ﻿/*
  *  Pkcs11Interop.URI.Demo - Demonstration application
  *                           for Pkcs11Interop.URI library
- *  Copyright (c) 2013-2014 JWC s.r.o. <http://www.jwc.sk>
+ *  Copyright (c) 2013-2015 JWC s.r.o. <http://www.jwc.sk>
  *  Author: Jaroslav Imrich <jimrich@jimrich.sk>
  *
  *  Licensing for open source projects:
@@ -466,7 +466,7 @@ namespace Net.Pkcs11Interop.URI
             if (string.IsNullOrEmpty(error))
             {
                 Console.WriteLine(@"Demonstration application for Pkcs11Interop.URI library");
-                Console.WriteLine(@"Copyright (c) 2013-2014 JWC s.r.o. <http://www.jwc.sk>");
+                Console.WriteLine(@"Copyright (c) 2013-2015 JWC s.r.o. <http://www.jwc.sk>");
                 Console.WriteLine(@"Author: Jaroslav Imrich <jimrich@jimrich.sk>");
                 Console.WriteLine();
             }

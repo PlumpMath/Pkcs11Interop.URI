@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("JWC s.r.o.")]
 [assembly: AssemblyProduct("Pkcs11Interop.URI (AGPL)")]
-[assembly: AssemblyCopyright("Copyright © 2013-2014 JWC s.r.o. All Rights Reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2013-2015 JWC s.r.o. All Rights Reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
