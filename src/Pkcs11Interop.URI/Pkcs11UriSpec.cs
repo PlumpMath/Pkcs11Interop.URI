@@ -146,16 +146,6 @@ namespace Net.Pkcs11Interop.URI
         internal const string Pk11Type = "type";
 
         /// <summary>
-        /// Name of "id" path attribute
-        /// </summary>
-        internal const string Pk11Id = "id";
-
-        /// <summary>
-        /// Prefix of vendor specific path attribute name
-        /// </summary>
-        internal const string Pk11PathVendorPrefix = "x-";
-
-        /// <summary>
         /// Value of "type" path attribute for public key
         /// </summary>
         internal const string Pk11TypePublic = "public";
@@ -181,6 +171,36 @@ namespace Net.Pkcs11Interop.URI
         internal const string Pk11TypeData = "data";
 
         /// <summary>
+        /// Name of "id" path attribute
+        /// </summary>
+        internal const string Pk11Id = "id";
+
+        /// <summary>
+        /// Name of "slot-manufacturer" path attribute
+        /// </summary>
+        internal const string Pk11SlotManuf = "slot-manufacturer";
+
+        /// <summary>
+        /// Max length of "slot-manufacturer" path attribute in bytes
+        /// </summary>
+        internal const int Pk11SlotManufMaxLength = 32;
+
+        /// <summary>
+        /// Name of "slot-description" path attribute
+        /// </summary>
+        internal const string Pk11SlotDesc = "slot-description";
+
+        /// <summary>
+        /// Max length of "slot-description" path attribute in bytes
+        /// </summary>
+        internal const int Pk11SlotDescMaxLength = 64;
+
+        /// <summary>
+        /// Name of "slot-id" path attribute
+        /// </summary>
+        internal const string Pk11SlotId = "slot-id";
+
+        /// <summary>
         /// Name of "pin-source" query attribute
         /// </summary>
         internal const string Pk11PinSource = "pin-source";
@@ -199,11 +219,6 @@ namespace Net.Pkcs11Interop.URI
         /// Name of "module-path" query attribute
         /// </summary>
         internal const string Pk11ModulePath = "module-path";
-
-        /// <summary>
-        /// Prefix of vendor specific query attribute name
-        /// </summary>
-        internal const string Pk11QueryVendorPrefix = "x-";
 
         /// <summary>
         /// Static constructor for Net.Pkcs11Interop.URI.Pkcs11UriSpec class
@@ -225,7 +240,7 @@ namespace Net.Pkcs11Interop.URI
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', // RFC 2234 ALPHA
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', // RFC 2234 ALPHA
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', // RFC 2234 DIGIT
-                '-', '_' // pk11-x-attr-nm-char
+                '-', '_' // pk11-v-attr-nm-char
             };
 
             // Set characters allowed in value of query attribute

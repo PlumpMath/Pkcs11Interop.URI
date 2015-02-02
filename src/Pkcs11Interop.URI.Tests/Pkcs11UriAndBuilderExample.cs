@@ -92,7 +92,7 @@ namespace Net.Pkcs11Interop.URI.Tests
             using (Pkcs11 pkcs11 = new Pkcs11(pkcs11Uri.ModulePath, true))
             {
                 //  Obtain a list of all slots with tokens that match URI
-                List<Slot> slots = pkcs11Uri.GetMatchingSlotList(pkcs11);
+                List<Slot> slots = pkcs11Uri.GetMatchingSlotList(pkcs11, true);
                 if ((slots == null) || (slots.Count == 0))
                     throw new Exception("None of the slots matches PKCS#11 URI");
 

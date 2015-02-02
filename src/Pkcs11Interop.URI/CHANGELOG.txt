@@ -1,2 +1,9 @@
 ﻿Pkcs11Interop.URI 1.0 (2014-01-02)
- - Initial stable release
+ - Initial stable release based on RFC Draft 13
+
+Pkcs11Interop.URI 1.1 (2014-12-31)
+ - Intermediate version that has not been officially released
+ - Merged changes from RFC Draft 14
+   - Removed x-pin-value and x-library-path attributes
+   - Added pin-value, module-name and module-path attributes
+ - Added demo application

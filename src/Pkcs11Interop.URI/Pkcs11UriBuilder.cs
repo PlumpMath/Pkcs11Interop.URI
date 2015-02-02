@@ -92,6 +92,9 @@ namespace Net.Pkcs11Interop.URI
             Object = pkcs11Uri.Object;
             Type = pkcs11Uri.Type;
             Id = pkcs11Uri.Id;
+            SlotManufacturer = pkcs11Uri.SlotManufacturer;
+            SlotDescription = pkcs11Uri.SlotDescription;
+            SlotId = pkcs11Uri.SlotId;
             UnknownPathAttributes = pkcs11Uri.UnknownPathAttributes;
 
             PinSource = pkcs11Uri.PinSource;
@@ -553,6 +556,125 @@ namespace Net.Pkcs11Interop.URI
         }
 
         /// <summary>
+        /// Value of path attribute "slot-manufacturer" encoded for PKCS#11 URI
+        /// </summary>
+        private string _slotManufacturerEncoded = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-manufacturer" that corresponds to the "manufacturerID" member of CK_SLOT_INFO structure
+        /// </summary>
+        private string _slotManufacturer = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-manufacturer" that corresponds to the "manufacturerID" member of CK_SLOT_INFO structure
+        /// </summary>
+        public string SlotManufacturer
+        {
+            get
+            {
+                return _slotManufacturer;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    _slotManufacturer = value;
+                    _slotManufacturerEncoded = value;
+                }
+                else
+                {
+                    string attributeName = Pkcs11UriSpec.Pk11SlotManuf;
+                    byte[] attributeValue = ConvertUtils.Utf8StringToBytes(value);
+                    if ((_checkLengths == true) && (attributeValue.Length > Pkcs11UriSpec.Pk11SlotManufMaxLength))
+                        throw new ArgumentOutOfRangeException("Value of " + attributeName + " attribute exceeds the maximum allowed length");
+                    _slotManufacturerEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
+                    _slotManufacturer = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Value of path attribute "slot-description" encoded for PKCS#11 URI
+        /// </summary>
+        private string _slotDescriptionEncoded = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-description" that corresponds to the "slotDescription" member of CK_SLOT_INFO structure
+        /// </summary>
+        private string _slotDescription = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-description" that corresponds to the "slotDescription" member of CK_SLOT_INFO structure
+        /// </summary>
+        public string SlotDescription
+        {
+            get
+            {
+                return _slotDescription;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    _slotDescription = value;
+                    _slotDescriptionEncoded = value;
+                }
+                else
+                {
+                    string attributeName = Pkcs11UriSpec.Pk11SlotDesc;
+                    byte[] attributeValue = ConvertUtils.Utf8StringToBytes(value);
+                    if ((_checkLengths == true) && (attributeValue.Length > Pkcs11UriSpec.Pk11SlotDescMaxLength))
+                        throw new ArgumentOutOfRangeException("Value of " + attributeName + " attribute exceeds the maximum allowed length");
+                    _slotDescriptionEncoded = EncodePk11String(attributeName, value, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
+                    _slotDescription = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Value of path attribute "slot-id" encoded for PKCS#11 URI
+        /// </summary>
+        private string _slotIdEncoded = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-id" that corresponds to the decimal number of "CK_SLOT_ID" type
+        /// </summary>
+        private ulong? _slotId = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-id" that corresponds to the decimal number of "CK_SLOT_ID" type
+        /// </summary>
+        public ulong? SlotId
+        {
+            get
+            {
+                return _slotId;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _slotId = value;
+                    _slotIdEncoded = null;
+                }
+                else
+                {
+                    string attributeName = Pkcs11UriSpec.Pk11SlotId;
+
+                    try
+                    {
+                        _slotId = Convert.ToUInt64(value);
+                        _slotIdEncoded = Convert.ToString(_slotId);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Pkcs11UriException("Invalid value of " + attributeName + " attribute", ex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Collection of unknown vendor specific path attributes that is validated when ToString() or ToPkcs11Uri() method is called
         /// </summary>
         private Dictionary<string, string> _unknownPathAttributes = null;
@@ -591,12 +713,6 @@ namespace Net.Pkcs11Interop.URI
                 // Validate attribute name
                 if (string.IsNullOrEmpty(attributeName))
                     throw new Pkcs11UriException("Attribute name cannot be null or empty");
-
-                if (!attributeName.StartsWith(Pkcs11UriSpec.Pk11PathVendorPrefix, StringComparison.InvariantCulture))
-                    throw new Pkcs11UriException("Invalid attribute name: " + attributeName);
-
-                if (attributeName.Length == Pkcs11UriSpec.Pk11PathVendorPrefix.Length)
-                    throw new Pkcs11UriException("Invalid attribute name: " + attributeName);
 
                 attributeName = EncodePk11String(null, attributeName, Pkcs11UriSpec.Pk11VendorAttrNameChars, false);
 
@@ -796,12 +912,6 @@ namespace Net.Pkcs11Interop.URI
                 if (string.IsNullOrEmpty(attributeName))
                     throw new Pkcs11UriException("Attribute name cannot be null or empty");
 
-                if (!attributeName.StartsWith(Pkcs11UriSpec.Pk11QueryVendorPrefix, StringComparison.InvariantCulture))
-                    throw new Pkcs11UriException("Invalid attribute name: " + attributeName);
-
-                if (attributeName.Length == Pkcs11UriSpec.Pk11QueryVendorPrefix.Length)
-                    throw new Pkcs11UriException("Invalid attribute name: " + attributeName);
-
                 attributeName = EncodePk11String(null, attributeName, Pkcs11UriSpec.Pk11VendorAttrNameChars, false);
 
                 // Validate attribute values
@@ -845,6 +955,13 @@ namespace Net.Pkcs11Interop.URI
                 pathAttributes.Add(Pkcs11UriSpec.Pk11LibDesc + Pkcs11UriSpec.Pk11PathAttributeNameAndValueSeparator + _libraryDescriptionEncoded);
             if (_libraryVersionEncoded != null)
                 pathAttributes.Add(Pkcs11UriSpec.Pk11LibVer + Pkcs11UriSpec.Pk11PathAttributeNameAndValueSeparator + _libraryVersionEncoded);
+            // Slot definition
+            if (_slotManufacturerEncoded != null)
+                pathAttributes.Add(Pkcs11UriSpec.Pk11SlotManuf + Pkcs11UriSpec.Pk11PathAttributeNameAndValueSeparator + _slotManufacturerEncoded);
+            if (_slotDescriptionEncoded != null)
+                pathAttributes.Add(Pkcs11UriSpec.Pk11SlotDesc + Pkcs11UriSpec.Pk11PathAttributeNameAndValueSeparator + _slotDescriptionEncoded);
+            if (_slotIdEncoded != null)
+                pathAttributes.Add(Pkcs11UriSpec.Pk11SlotId + Pkcs11UriSpec.Pk11PathAttributeNameAndValueSeparator + _slotIdEncoded);
             // Token definition
             if (_manufacturerEncoded != null)
                 pathAttributes.Add(Pkcs11UriSpec.Pk11Manuf + Pkcs11UriSpec.Pk11PathAttributeNameAndValueSeparator + _manufacturerEncoded);

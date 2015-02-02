@@ -94,6 +94,19 @@ namespace Net.Pkcs11Interop.URI
         }
 
         /// <summary>
+        /// Flag indicating whether PKCS#11 URI path attributes define specific slot
+        /// </summary>
+        public bool DefinesSlot
+        {
+            get
+            {
+                return (SlotManufacturer != null ||
+                        SlotDescription != null ||
+                        SlotId != null);
+            }
+        }
+
+        /// <summary>
         /// Flag indicating whether PKCS#11 URI path attributes define specific token
         /// </summary>
         public bool DefinesToken
@@ -281,6 +294,54 @@ namespace Net.Pkcs11Interop.URI
             get
             {
                 return _id;
+            }
+        }
+
+        /// <summary>
+        /// Value of path attribute "slot-manufacturer" that corresponds to the "manufacturerID" member of CK_SLOT_INFO structure
+        /// </summary>
+        private string _slotManufacturer = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-manufacturer" that corresponds to the "manufacturerID" member of CK_SLOT_INFO structure
+        /// </summary>
+        public string SlotManufacturer
+        {
+            get
+            {
+                return _slotManufacturer;
+            }
+        }
+
+        /// <summary>
+        /// Value of path attribute "slot-description" that corresponds to the "slotDescription" member of CK_SLOT_INFO structure
+        /// </summary>
+        private string _slotDescription = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-description" that corresponds to the "slotDescription" member of CK_SLOT_INFO structure
+        /// </summary>
+        public string SlotDescription
+        {
+            get
+            {
+                return _slotDescription;
+            }
+        }
+
+        /// <summary>
+        /// Value of path attribute "slot-id" that corresponds to the decimal number of "CK_SLOT_ID" type
+        /// </summary>
+        private ulong? _slotId = null;
+
+        /// <summary>
+        /// Value of path attribute "slot-id" that corresponds to the decimal number of "CK_SLOT_ID" type
+        /// </summary>
+        public ulong? SlotId
+        {
+            get
+            {
+                return _slotId;
             }
         }
 
@@ -509,22 +570,22 @@ namespace Net.Pkcs11Interop.URI
         /// <summary>
         /// Checks whether PKCS#11 library information matches PKCS#11 URI
         /// </summary>
-        /// <param name="manufacturer">PKCS#11 library manufacturer</param>
-        /// <param name="description">PKCS#11 library description</param>
-        /// <param name="version">PKCS#11 library version</param>
+        /// <param name="libraryManufacturer">PKCS#11 library manufacturer</param>
+        /// <param name="libraryDescription">PKCS#11 library description</param>
+        /// <param name="libraryVersion">PKCS#11 library version</param>
         /// <returns>True if PKCS#11 library information matches PKCS#11 URI</returns>
-        private bool Matches(string manufacturer, string description, string version)
+        private bool Matches(string libraryManufacturer, string libraryDescription, string libraryVersion)
         {
             if (_unknownPathAttributes != null)
                 return false;
 
-            if (!SimpleStringsMatch(LibraryManufacturer, manufacturer))
+            if (!SimpleStringsMatch(LibraryManufacturer, libraryManufacturer))
                 return false;
 
-            if (!SimpleStringsMatch(LibraryDescription, description))
+            if (!SimpleStringsMatch(LibraryDescription, libraryDescription))
                 return false;
 
-            if (!SimpleStringsMatch(LibraryVersion, version))
+            if (!SimpleStringsMatch(LibraryVersion, libraryVersion))
                 return false;
 
             return true;
@@ -599,31 +660,126 @@ namespace Net.Pkcs11Interop.URI
 
         #endregion
 
+        #region SlotInfo
+
+        /// <summary>
+        /// Checks whether slot information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="slotManufacturer">Slot manufacturer</param>
+        /// <param name="slotDescription">Slot description</param>
+        /// <param name="slotId">Slot identifier</param>
+        /// <returns>True if slot information matches PKCS#11 URI</returns>
+        private bool Matches(string slotManufacturer, string slotDescription, ulong? slotId)
+        {
+            if (_unknownPathAttributes != null)
+                return false;
+
+            if (!SimpleStringsMatch(SlotManufacturer, slotManufacturer))
+                return false;
+
+            if (!SimpleStringsMatch(SlotDescription, slotDescription))
+                return false;
+
+            if (!SlotIdsMatch(SlotId, slotId))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Checks whether slot information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="slotInfo">Slot information</param>
+        /// <returns>True if slot information matches PKCS#11 URI</returns>
+        public bool Matches(HLA.SlotInfo slotInfo)
+        {
+            if (slotInfo == null)
+                throw new ArgumentNullException("slotInfo");
+
+            return Matches(slotInfo.ManufacturerId, slotInfo.SlotDescription, slotInfo.SlotId);
+        }
+
+        /// <summary>
+        /// Checks whether slot information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="slotInfo">Slot information</param>
+        /// <returns>True if slot information matches PKCS#11 URI</returns>
+        public bool Matches(HLA8.SlotInfo slotInfo)
+        {
+            if (slotInfo == null)
+                throw new ArgumentNullException("slotInfo");
+
+            return Matches(slotInfo.ManufacturerId, slotInfo.SlotDescription, slotInfo.SlotId);
+        }
+
+        /// <summary>
+        /// Checks whether slot information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="slotInfo">Slot information</param>
+        /// <returns>True if slot information matches PKCS#11 URI</returns>
+        public bool Matches(HLA4.SlotInfo slotInfo)
+        {
+            if (slotInfo == null)
+                throw new ArgumentNullException("slotInfo");
+
+            return Matches(slotInfo.ManufacturerId, slotInfo.SlotDescription, slotInfo.SlotId);
+        }
+
+        /// <summary>
+        /// Checks whether slot information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="slotInfo">Slot information</param>
+        /// <param name="slotId">Slot identifier</param>
+        /// <returns>True if slot information matches PKCS#11 URI</returns>
+        public bool Matches(LLA8.CK_SLOT_INFO slotInfo, ulong? slotId)
+        {
+            string manufacturer = ConvertUtils.BytesToUtf8String(slotInfo.ManufacturerId, true);
+            string description = ConvertUtils.BytesToUtf8String(slotInfo.SlotDescription, true);
+
+            return Matches(manufacturer, description, slotId);
+        }
+
+        /// <summary>
+        /// Checks whether slot information matches PKCS#11 URI
+        /// </summary>
+        /// <param name="slotInfo">Slot information</param>
+        /// <param name="slotId">Slot identifier</param>
+        /// <returns>True if slot information matches PKCS#11 URI</returns>
+        public bool Matches(LLA4.CK_SLOT_INFO slotInfo, uint? slotId)
+        {
+            string manufacturer = ConvertUtils.BytesToUtf8String(slotInfo.ManufacturerId, true);
+            string description = ConvertUtils.BytesToUtf8String(slotInfo.SlotDescription, true);
+
+            return Matches(manufacturer, description, slotId);
+        }
+
+        #endregion
+
         #region TokenInfo
 
         /// <summary>
         /// Checks whether token information matches PKCS#11 URI
         /// </summary>
-        /// <param name="token">Token label</param>
-        /// <param name="manufacturer">Token manufacturer</param>
-        /// <param name="serial">Token serial number</param>
-        /// <param name="model">Token model</param>
+        /// <param name="tokenLabel">Token label</param>
+        /// <param name="tokenManufacturer">Token manufacturer</param>
+        /// <param name="tokenSerial">Token serial number</param>
+        /// <param name="tokenModel">Token model</param>
         /// <returns>True if token information matches PKCS#11 URI</returns>
-        private bool Matches(string token, string manufacturer, string serial, string model)
+        private bool Matches(string tokenLabel, string tokenManufacturer, string tokenSerial, string tokenModel)
         {
             if (_unknownPathAttributes != null)
                 return false;
 
-            if (!SimpleStringsMatch(Token, token))
+            if (!SimpleStringsMatch(Token, tokenLabel))
                 return false;
 
-            if (!SimpleStringsMatch(Manufacturer, manufacturer))
+            if (!SimpleStringsMatch(Manufacturer, tokenManufacturer))
                 return false;
 
-            if (!SimpleStringsMatch(Serial, serial))
+            if (!SimpleStringsMatch(Serial, tokenSerial))
                 return false;
 
-            if (!SimpleStringsMatch(Model, model))
+            if (!SimpleStringsMatch(Model, tokenModel))
                 return false;
 
             return true;
@@ -1028,11 +1184,12 @@ namespace Net.Pkcs11Interop.URI
         #region GetMatchingSlotList
 
         /// <summary>
-        /// Obtains a list of all slots where token that matches PKCS#11 URI is present
+        /// Obtains a list of all PKCS#11 URI matching slots
         /// </summary>
         /// <param name="pkcs11">High level PKCS#11 wrapper</param>
+        /// <param name="tokenPresent">Flag indicating whether the list obtained includes only those slots with a token present (true), or all slots (false)</param>
         /// <returns>List of slots matching PKCS#11 URI</returns>
-        public List<HLA.Slot> GetMatchingSlotList(HLA.Pkcs11 pkcs11)
+        public List<HLA.Slot> GetMatchingSlotList(HLA.Pkcs11 pkcs11, bool tokenPresent)
         {
             if (pkcs11 == null)
                 throw new ArgumentNullException("pkcs11");
@@ -1043,26 +1200,39 @@ namespace Net.Pkcs11Interop.URI
             if (!Matches(libraryInfo))
                 return matchingSlots;
 
-            List<HLA.Slot> slots = pkcs11.GetSlotList(true);
+            List<HLA.Slot> slots = pkcs11.GetSlotList(false);
             if ((slots == null) || (slots.Count == 0))
                 return slots;
 
             foreach (HLA.Slot slot in slots)
             {
-                HLA.TokenInfo tokenInfo = slot.GetTokenInfo();
-                if (Matches(tokenInfo))
-                    matchingSlots.Add(slot);
+                HLA.SlotInfo slotInfo = slot.GetSlotInfo();
+                if (Matches(slotInfo))
+                {
+                    if (slotInfo.SlotFlags.TokenPresent)
+                    {
+                        HLA.TokenInfo tokenInfo = slot.GetTokenInfo();
+                        if (Matches(tokenInfo))
+                            matchingSlots.Add(slot);
+                    }
+                    else
+                    {
+                        if (!tokenPresent && Matches(null, null, null, null))
+                            matchingSlots.Add(slot);
+                    }
+                }
             }
 
             return matchingSlots;
         }
 
         /// <summary>
-        /// Obtains a list of all slots where token that matches PKCS#11 URI is present
+        /// Obtains a list of all PKCS#11 URI matching slots
         /// </summary>
         /// <param name="pkcs11">High level PKCS#11 wrapper</param>
+        /// <param name="tokenPresent">Flag indicating whether the list obtained includes only those slots with a token present (true), or all slots (false)</param>
         /// <returns>List of slots matching PKCS#11 URI</returns>
-        public List<HLA8.Slot> GetMatchingSlotList(HLA8.Pkcs11 pkcs11)
+        public List<HLA8.Slot> GetMatchingSlotList(HLA8.Pkcs11 pkcs11, bool tokenPresent)
         {
             if (pkcs11 == null)
                 throw new ArgumentNullException("pkcs11");
@@ -1073,26 +1243,39 @@ namespace Net.Pkcs11Interop.URI
             if (!Matches(libraryInfo))
                 return matchingSlots;
 
-            List<HLA8.Slot> slots = pkcs11.GetSlotList(true);
+            List<HLA8.Slot> slots = pkcs11.GetSlotList(false);
             if ((slots == null) || (slots.Count == 0))
                 return slots;
 
             foreach (HLA8.Slot slot in slots)
             {
-                HLA8.TokenInfo tokenInfo = slot.GetTokenInfo();
-                if (Matches(tokenInfo))
-                    matchingSlots.Add(slot);
+                HLA8.SlotInfo slotInfo = slot.GetSlotInfo();
+                if (Matches(slotInfo))
+                {
+                    if (slotInfo.SlotFlags.TokenPresent)
+                    {
+                        HLA8.TokenInfo tokenInfo = slot.GetTokenInfo();
+                        if (Matches(tokenInfo))
+                            matchingSlots.Add(slot);
+                    }
+                    else
+                    {
+                        if (!tokenPresent && Matches(null, null, null, null))
+                            matchingSlots.Add(slot);
+                    }
+                }
             }
 
             return matchingSlots;
         }
 
         /// <summary>
-        /// Obtains a list of all slots where token that matches PKCS#11 URI is present
+        /// Obtains a list of all PKCS#11 URI matching slots
         /// </summary>
         /// <param name="pkcs11">High level PKCS#11 wrapper</param>
+        /// <param name="tokenPresent">Flag indicating whether the list obtained includes only those slots with a token present (true), or all slots (false)</param>
         /// <returns>List of slots matching PKCS#11 URI</returns>
-        public List<HLA4.Slot> GetMatchingSlotList(HLA4.Pkcs11 pkcs11)
+        public List<HLA4.Slot> GetMatchingSlotList(HLA4.Pkcs11 pkcs11, bool tokenPresent)
         {
             if (pkcs11 == null)
                 throw new ArgumentNullException("pkcs11");
@@ -1103,15 +1286,27 @@ namespace Net.Pkcs11Interop.URI
             if (!Matches(libraryInfo))
                 return matchingSlots;
 
-            List<HLA4.Slot> slots = pkcs11.GetSlotList(true);
+            List<HLA4.Slot> slots = pkcs11.GetSlotList(false);
             if ((slots == null) || (slots.Count == 0))
                 return slots;
 
             foreach (HLA4.Slot slot in slots)
             {
-                HLA4.TokenInfo tokenInfo = slot.GetTokenInfo();
-                if (Matches(tokenInfo))
-                    matchingSlots.Add(slot);
+                HLA4.SlotInfo slotInfo = slot.GetSlotInfo();
+                if (Matches(slotInfo))
+                {
+                    if (slotInfo.SlotFlags.TokenPresent)
+                    {
+                        HLA4.TokenInfo tokenInfo = slot.GetTokenInfo();
+                        if (Matches(tokenInfo))
+                            matchingSlots.Add(slot);
+                    }
+                    else
+                    {
+                        if (!tokenPresent && Matches(null, null, null, null))
+                            matchingSlots.Add(slot);
+                    }
+                }
             }
 
             return matchingSlots;
@@ -1121,9 +1316,10 @@ namespace Net.Pkcs11Interop.URI
         /// Obtains a list of all slots where token that matches PKCS#11 URI is present
         /// </summary>
         /// <param name="pkcs11">Low level PKCS#11 wrapper</param>
+        /// <param name="tokenPresent">Flag indicating whether the list obtained includes only those slots with a token present (true), or all slots (false)</param>
         /// <param name="slotList">List of slots matching PKCS#11 URI</param>
         /// <returns>CKR_OK if successful; any other value otherwise</returns>
-        public CKR GetMatchingSlotList(LLA8.Pkcs11 pkcs11, out ulong[] slotList)
+        public CKR GetMatchingSlotList(LLA8.Pkcs11 pkcs11, bool tokenPresent, out ulong[] slotList)
         {
             if (pkcs11 == null)
                 throw new ArgumentNullException("pkcs11");
@@ -1135,29 +1331,29 @@ namespace Net.Pkcs11Interop.URI
             CKR rv = pkcs11.C_GetInfo(ref libraryInfo);
             if (rv != CKR.CKR_OK)
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new ulong[0];
                 return rv;
             }
 
             // Check whether library matches URI
             if (!Matches(libraryInfo))
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new ulong[0];
                 return CKR.CKR_OK;
             }
 
             // Get number of slots in first call
             ulong slotCount = 0;
-            rv = pkcs11.C_GetSlotList(true, null, ref slotCount);
+            rv = pkcs11.C_GetSlotList(false, null, ref slotCount);
             if (rv != CKR.CKR_OK)
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new ulong[0];
                 return rv;
             }
 
             if (slotCount < 1)
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new ulong[0];
                 return CKR.CKR_OK;
             }
 
@@ -1165,26 +1361,51 @@ namespace Net.Pkcs11Interop.URI
             ulong[] slots = new ulong[slotCount];
 
             // Get slot IDs in second call
-            rv = pkcs11.C_GetSlotList(true, slots, ref slotCount);
+            rv = pkcs11.C_GetSlotList(tokenPresent, slots, ref slotCount);
             if (rv != CKR.CKR_OK)
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new ulong[0];
                 return rv;
             }
+
+            // Shrink array if needed
+            if (slots.Length != Convert.ToInt32(slotCount))
+                Array.Resize(ref slots, Convert.ToInt32(slotCount));
 
             // Match slots with Pkcs11Uri
             foreach (ulong slot in slots)
             {
-                LLA8.CK_TOKEN_INFO tokenInfo = new LLA8.CK_TOKEN_INFO();
-                rv = pkcs11.C_GetTokenInfo(slot, ref tokenInfo);
+                LLA8.CK_SLOT_INFO slotInfo = new LLA8.CK_SLOT_INFO();
+                rv = pkcs11.C_GetSlotInfo(slot, ref slotInfo);
                 if (rv != CKR.CKR_OK)
                 {
-                    slotList = matchingSlots.ToArray();
+                    slotList = new ulong[0];
                     return rv;
                 }
 
-                if (Matches(tokenInfo))
-                    matchingSlots.Add(slot);
+                // Check whether slot matches URI
+                if (Matches(slotInfo, slot))
+                {
+                    if ((slotInfo.Flags & CKF.CKF_TOKEN_PRESENT) == CKF.CKF_TOKEN_PRESENT)
+                    {
+                        LLA8.CK_TOKEN_INFO tokenInfo = new LLA8.CK_TOKEN_INFO();
+                        rv = pkcs11.C_GetTokenInfo(slot, ref tokenInfo);
+                        if (rv != CKR.CKR_OK)
+                        {
+                            slotList = new ulong[0];
+                            return rv;
+                        }
+
+                        // Check whether token matches URI
+                        if (Matches(tokenInfo))
+                            matchingSlots.Add(slot);
+                    }
+                    else
+                    {
+                        if (!tokenPresent && Matches(null, null, null, null))
+                            matchingSlots.Add(slot);
+                    }
+                }
             }
 
             slotList = matchingSlots.ToArray();
@@ -1195,9 +1416,10 @@ namespace Net.Pkcs11Interop.URI
         /// Obtains a list of all slots where token that matches PKCS#11 URI is present
         /// </summary>
         /// <param name="pkcs11">Low level PKCS#11 wrapper</param>
+        /// <param name="tokenPresent">Flag indicating whether the list obtained includes only those slots with a token present (true), or all slots (false)</param>
         /// <param name="slotList">List of slots matching PKCS#11 URI</param>
         /// <returns>CKR_OK if successful; any other value otherwise</returns>
-        public CKR GetMatchingSlotList(LLA4.Pkcs11 pkcs11, out uint[] slotList)
+        public CKR GetMatchingSlotList(LLA4.Pkcs11 pkcs11, bool tokenPresent, out uint[] slotList)
         {
             if (pkcs11 == null)
                 throw new ArgumentNullException("pkcs11");
@@ -1209,29 +1431,29 @@ namespace Net.Pkcs11Interop.URI
             CKR rv = pkcs11.C_GetInfo(ref libraryInfo);
             if (rv != CKR.CKR_OK)
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new uint[0];
                 return rv;
             }
 
             // Check whether library matches URI
             if (!Matches(libraryInfo))
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new uint[0];
                 return CKR.CKR_OK;
             }
 
             // Get number of slots in first call
             uint slotCount = 0;
-            rv = pkcs11.C_GetSlotList(true, null, ref slotCount);
+            rv = pkcs11.C_GetSlotList(false, null, ref slotCount);
             if (rv != CKR.CKR_OK)
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new uint[0];
                 return rv;
             }
 
             if (slotCount < 1)
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new uint[0];
                 return CKR.CKR_OK;
             }
 
@@ -1239,26 +1461,51 @@ namespace Net.Pkcs11Interop.URI
             uint[] slots = new uint[slotCount];
 
             // Get slot IDs in second call
-            rv = pkcs11.C_GetSlotList(true, slots, ref slotCount);
+            rv = pkcs11.C_GetSlotList(tokenPresent, slots, ref slotCount);
             if (rv != CKR.CKR_OK)
             {
-                slotList = matchingSlots.ToArray();
+                slotList = new uint[0];
                 return rv;
             }
+
+            // Shrink array if needed
+            if (slots.Length != slotCount)
+                Array.Resize(ref slots, Convert.ToInt32(slotCount));
 
             // Match slots with Pkcs11Uri
             foreach (uint slot in slots)
             {
-                LLA4.CK_TOKEN_INFO tokenInfo = new LLA4.CK_TOKEN_INFO();
-                rv = pkcs11.C_GetTokenInfo(slot, ref tokenInfo);
+                LLA4.CK_SLOT_INFO slotInfo = new LLA4.CK_SLOT_INFO();
+                rv = pkcs11.C_GetSlotInfo(slot, ref slotInfo);
                 if (rv != CKR.CKR_OK)
                 {
-                    slotList = matchingSlots.ToArray();
+                    slotList = new uint[0];
                     return rv;
                 }
 
-                if (Matches(tokenInfo))
-                    matchingSlots.Add(slot);
+                // Check whether slot matches URI
+                if (Matches(slotInfo, slot))
+                {
+                    if ((slotInfo.Flags & CKF.CKF_TOKEN_PRESENT) == CKF.CKF_TOKEN_PRESENT)
+                    {
+                        LLA4.CK_TOKEN_INFO tokenInfo = new LLA4.CK_TOKEN_INFO();
+                        rv = pkcs11.C_GetTokenInfo(slot, ref tokenInfo);
+                        if (rv != CKR.CKR_OK)
+                        {
+                            slotList = new uint[0];
+                            return rv;
+                        }
+
+                        // Check whether token matches URI
+                        if (Matches(tokenInfo))
+                            matchingSlots.Add(slot);
+                    }
+                    else
+                    {
+                        if (!tokenPresent && Matches(null, null, null, null))
+                            matchingSlots.Add(slot);
+                    }
+                }
             }
 
             slotList = matchingSlots.ToArray();
@@ -1490,39 +1737,6 @@ namespace Net.Pkcs11Interop.URI
 
                     break;
 
-                case Pkcs11UriSpec.Pk11Object:
-
-                    if (_object != null)
-                        throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the path component");
-
-                    if (attributeValue != string.Empty)
-                    {
-                        byte[] bytes = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
-                        _object = ConvertUtils.BytesToUtf8String(bytes);
-                    }
-                    else
-                    {
-                        _object = string.Empty;
-                    }
-
-                    break;
-
-                case Pkcs11UriSpec.Pk11Id:
-
-                    if (_id != null)
-                        throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the path component");
-
-                    if (attributeValue != string.Empty)
-                    {
-                        _id = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
-                    }
-                    else
-                    {
-                        _id = new byte[0];
-                    }
-
-                    break;
-
                 case Pkcs11UriSpec.Pk11LibVer:
 
                     if (_libraryVersion != null)
@@ -1574,7 +1788,24 @@ namespace Net.Pkcs11Interop.URI
                         throw new Pkcs11UriException("Value of " + attributeName + " attribute exceeds the maximum allowed length");
 
                     _libraryVersion = string.Format("{0}.{1}", major, minor);
-    
+
+                    break;
+
+                case Pkcs11UriSpec.Pk11Object:
+
+                    if (_object != null)
+                        throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the path component");
+
+                    if (attributeValue != string.Empty)
+                    {
+                        byte[] bytes = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
+                        _object = ConvertUtils.BytesToUtf8String(bytes);
+                    }
+                    else
+                    {
+                        _object = string.Empty;
+                    }
+
                     break;
 
                 case Pkcs11UriSpec.Pk11Type:
@@ -1608,13 +1839,83 @@ namespace Net.Pkcs11Interop.URI
 
                     break;
 
+                case Pkcs11UriSpec.Pk11Id:
+
+                    if (_id != null)
+                        throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the path component");
+
+                    if (attributeValue != string.Empty)
+                    {
+                        _id = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
+                    }
+                    else
+                    {
+                        _id = new byte[0];
+                    }
+
+                    break;
+
+                case Pkcs11UriSpec.Pk11SlotManuf:
+
+                    if (_slotManufacturer != null)
+                        throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the path component");
+
+                    if (attributeValue != string.Empty)
+                    {
+                        byte[] bytes = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
+                        if ((_checkLengths == true) && (bytes.Length > Pkcs11UriSpec.Pk11SlotManufMaxLength))
+                            throw new Pkcs11UriException("Value of " + attributeName + " attribute exceeds the maximum allowed length");
+                        _slotManufacturer = ConvertUtils.BytesToUtf8String(bytes);
+                    }
+                    else
+                    {
+                        _slotManufacturer = string.Empty;
+                    }
+
+                    break;
+
+                case Pkcs11UriSpec.Pk11SlotDesc:
+
+                    if (_slotDescription != null)
+                        throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the path component");
+
+                    if (attributeValue != string.Empty)
+                    {
+                        byte[] bytes = DecodePk11String(attributeName, attributeValue, Pkcs11UriSpec.Pk11PathAttrValueChars, true);
+                        if ((_checkLengths == true) && (bytes.Length > Pkcs11UriSpec.Pk11SlotDescMaxLength))
+                            throw new Pkcs11UriException("Value of " + attributeName + " attribute exceeds the maximum allowed length");
+                        _slotDescription = ConvertUtils.BytesToUtf8String(bytes);
+                    }
+                    else
+                    {
+                        _slotDescription = string.Empty;
+                    }
+
+                    break;
+
+                case Pkcs11UriSpec.Pk11SlotId:
+
+                    if (_slotId != null)
+                        throw new Pkcs11UriException("Duplicate attribute " + attributeName + " found in the path component");
+
+                    if (attributeValue == string.Empty)
+                        throw new Pkcs11UriException("Value of " + attributeName + " attribute cannot be empty");
+
+                    try
+                    {
+                        _slotId = Convert.ToUInt64(attributeValue);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Pkcs11UriException("Invalid value of " + attributeName + " attribute", ex);
+                    }
+
+                    break;
+
                 default:
 
-                    if (!attributeName.StartsWith(Pkcs11UriSpec.Pk11PathVendorPrefix, StringComparison.InvariantCulture))
-                        throw new Pkcs11UriException("Invalid attribute name: " + attributeName);
-
-                    if (attributeName.Length == Pkcs11UriSpec.Pk11PathVendorPrefix.Length)
-                        throw new Pkcs11UriException("Invalid attribute name: " + attributeName);
+                    if (string.IsNullOrEmpty(attributeName))
+                        throw new Pkcs11UriException("Attribute without name found in the path component");
 
                     byte[] vendorAttrName = DecodePk11String(null, attributeName, Pkcs11UriSpec.Pk11VendorAttrNameChars, false);
                     attributeName = ConvertUtils.BytesToUtf8String(vendorAttrName);
@@ -1722,11 +2023,8 @@ namespace Net.Pkcs11Interop.URI
 
                 default:
 
-                    if (!attributeName.StartsWith(Pkcs11UriSpec.Pk11QueryVendorPrefix, StringComparison.InvariantCulture))
-                        throw new Pkcs11UriException("Invalid attribute name: " + attributeName);
-
-                    if (attributeName.Length == Pkcs11UriSpec.Pk11QueryVendorPrefix.Length)
-                        throw new Pkcs11UriException("Invalid attribute name: " + attributeName);
+                    if (string.IsNullOrEmpty(attributeName))
+                        throw new Pkcs11UriException("Attribute without name found in the query component");
 
                     byte[] vendorAttrName = DecodePk11String(null, attributeName, Pkcs11UriSpec.Pk11VendorAttrNameChars, false);
                     attributeName = ConvertUtils.BytesToUtf8String(vendorAttrName);
@@ -1911,6 +2209,31 @@ namespace Net.Pkcs11Interop.URI
                         if (uriArray[i] != inputArray[i])
                             return false;
                     }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Checks whether id matches the value of "slot-id" path attribute
+        /// </summary>
+        /// <param name="uriId">Value of "slot-id" path attribute present (or not) in PKCS#11 URI</param>
+        /// <param name="inputId">Id that should be compared with the value of "slot-id" path attribute</param>
+        /// <returns>True if id matches the value of "slot-id" path attribute</returns>
+        private bool SlotIdsMatch(ulong? uriId, ulong? inputId)
+        {
+            if (inputId == null)
+            {
+                if (uriId != null)
+                    return false;
+            }
+            else
+            {
+                if (uriId != null)
+                {
+                    if (uriId.Value != inputId.Value)
+                        return false;
                 }
             }
 

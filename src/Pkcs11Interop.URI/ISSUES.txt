@@ -1,4 +1,4 @@
-﻿Pkcs11Interop.URI implements full PKCS#11 URI (draft 13) specification 
+﻿Pkcs11Interop.URI implements full PKCS#11 URI (draft 19) specification 
 with the following known limitations:
 
  - As recommended by PKCS#11 URI specification Pkcs11UriBuilder class 

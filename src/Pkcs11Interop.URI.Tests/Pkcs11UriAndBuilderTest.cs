@@ -190,6 +190,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == null);
             Assert.IsTrue(pkcs11uri.LibraryDescription == null);
             Assert.IsTrue(pkcs11uri.LibraryVersion == null);
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == null);
+            Assert.IsTrue(pkcs11uri.SlotDescription == null);
+            Assert.IsTrue(pkcs11uri.SlotId == null);
             Assert.IsTrue(pkcs11uri.Manufacturer == null);
             Assert.IsTrue(pkcs11uri.Model == null);
             Assert.IsTrue(pkcs11uri.Serial == null);
@@ -208,6 +211,7 @@ namespace Net.Pkcs11Interop.URI.Tests
         {
             string uri = @"pkcs11:";
             uri += @"library-manufacturer=foo;library-description=bar;library-version=1;";
+            uri += @"slot-manufacturer=foo;slot-description=bar;slot-id=1;";
             uri += @"manufacturer=foo;model=bar;serial=foo;token=bar;";
             uri += @"type=private;object=foo;id=%62%61%72";
             uri += @"?";
@@ -219,6 +223,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             pkcs11UriBuilder.LibraryManufacturer = "foo";
             pkcs11UriBuilder.LibraryDescription = "bar";
             pkcs11UriBuilder.LibraryVersion = "1";
+            pkcs11UriBuilder.SlotManufacturer = "foo";
+            pkcs11UriBuilder.SlotDescription = "bar";
+            pkcs11UriBuilder.SlotId = 1;
             pkcs11UriBuilder.Manufacturer = "foo";
             pkcs11UriBuilder.Model = "bar";
             pkcs11UriBuilder.Serial = "foo";
@@ -242,6 +249,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == "foo");
             Assert.IsTrue(pkcs11uri.LibraryDescription == "bar");
             Assert.IsTrue(pkcs11uri.LibraryVersion == "1.0");
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == "foo");
+            Assert.IsTrue(pkcs11uri.SlotDescription == "bar");
+            Assert.IsTrue(pkcs11uri.SlotId == 1);
             Assert.IsTrue(pkcs11uri.Manufacturer == "foo");
             Assert.IsTrue(pkcs11uri.Model == "bar");
             Assert.IsTrue(pkcs11uri.Serial == "foo");
@@ -281,6 +291,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == null);
             Assert.IsTrue(pkcs11uri.LibraryDescription == null);
             Assert.IsTrue(pkcs11uri.LibraryVersion == null);
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == null);
+            Assert.IsTrue(pkcs11uri.SlotDescription == null);
+            Assert.IsTrue(pkcs11uri.SlotId == null);
             Assert.IsTrue(pkcs11uri.Manufacturer == null);
             Assert.IsTrue(pkcs11uri.Model == null);
             Assert.IsTrue(pkcs11uri.Serial == null);
@@ -299,6 +312,7 @@ namespace Net.Pkcs11Interop.URI.Tests
         {
             string uri = @"pkcs11:";
             uri += @"library-manufacturer=foo;library-description=bar;library-version=1;";
+            uri += @"slot-manufacturer=foo;slot-description=bar;slot-id=1;";
             uri += @"manufacturer=foo;model=bar;serial=foo;token=bar;";
             uri += @"type=private;object=foo;id=%62%61%72";
 
@@ -307,6 +321,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             pkcs11UriBuilder.LibraryManufacturer = "foo";
             pkcs11UriBuilder.LibraryDescription = "bar";
             pkcs11UriBuilder.LibraryVersion = "1";
+            pkcs11UriBuilder.SlotManufacturer = "foo";
+            pkcs11UriBuilder.SlotDescription = "bar";
+            pkcs11UriBuilder.SlotId = 1;
             pkcs11UriBuilder.Manufacturer = "foo";
             pkcs11UriBuilder.Model = "bar";
             pkcs11UriBuilder.Serial = "foo";
@@ -326,6 +343,9 @@ namespace Net.Pkcs11Interop.URI.Tests
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == "foo");
             Assert.IsTrue(pkcs11uri.LibraryDescription == "bar");
             Assert.IsTrue(pkcs11uri.LibraryVersion == "1.0");
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == "foo");
+            Assert.IsTrue(pkcs11uri.SlotDescription == "bar");
+            Assert.IsTrue(pkcs11uri.SlotId == 1);
             Assert.IsTrue(pkcs11uri.Manufacturer == "foo");
             Assert.IsTrue(pkcs11uri.Model == "bar");
             Assert.IsTrue(pkcs11uri.Serial == "foo");
@@ -408,8 +428,9 @@ namespace Net.Pkcs11Interop.URI.Tests
         {
             string uri = @"pkcs11:
 library-manufacturer=foo;                library-description=bar;library-version=1;
-manufacturer=foo;model=bar; serial=foo;token=bar;
+slot-manufacturer=foo;slot-description=bar;slot-id=1;                 
 
+manufacturer=foo;model=bar; serial=foo;token=bar;
 type=private;object=foo;id=%62%61%72    ?    module-path=foo&module-name=bar&pin-value=foo&pin-source=bar";
 
             // Note: Builder cannot be used to produce URI like this one
@@ -424,6 +445,9 @@ type=private;object=foo;id=%62%61%72    ?    module-path=foo&module-name=bar&pin
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == "foo");
             Assert.IsTrue(pkcs11uri.LibraryDescription == "bar");
             Assert.IsTrue(pkcs11uri.LibraryVersion == "1.0");
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == "foo");
+            Assert.IsTrue(pkcs11uri.SlotDescription == "bar");
+            Assert.IsTrue(pkcs11uri.SlotId == 1);
             Assert.IsTrue(pkcs11uri.Manufacturer == "foo");
             Assert.IsTrue(pkcs11uri.Model == "bar");
             Assert.IsTrue(pkcs11uri.Serial == "foo");
@@ -445,7 +469,8 @@ faucibus diam quis, hendrerit leo. Maecenas aliquam elit lectus, pulvinar accums
 egestas et. Duis tincidunt ut magna nec tincidunt. In vitae arcu convallis, tempus nisl
 id, tincidunt eros. Ut tristique, nisi eget suscipit mollis, diam quam vehicula risus, 
 eget tristique nunc est dapibus dolor. Vestibulum vehicula vel velit luctus tincidunt. 
-<pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;manufacturer
+<pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;
+slot-manufacturer=foo;slot-description=bar;slot-id=1;manufacturer
 =foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?module-path
 =foo&module-name=bar&pin-value=foo&pin-source=bar> In volutpat laoreet auctor. Nam 
 convallis dignissim purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu 
@@ -464,6 +489,9 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == "foo");
             Assert.IsTrue(pkcs11uri.LibraryDescription == "bar");
             Assert.IsTrue(pkcs11uri.LibraryVersion == "1.0");
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == "foo");
+            Assert.IsTrue(pkcs11uri.SlotDescription == "bar");
+            Assert.IsTrue(pkcs11uri.SlotId == 1);
             Assert.IsTrue(pkcs11uri.Manufacturer == "foo");
             Assert.IsTrue(pkcs11uri.Model == "bar");
             Assert.IsTrue(pkcs11uri.Serial == "foo");
@@ -485,7 +513,8 @@ faucibus diam quis, hendrerit leo. Maecenas aliquam elit lectus, pulvinar accums
 egestas et. Duis tincidunt ut magna nec tincidunt. In vitae arcu convallis, tempus nisl
 id, tincidunt eros. Ut tristique, nisi eget suscipit mollis, diam quam vehicula risus, 
 eget tristique nunc est dapibus dolor. Vestibulum vehicula vel velit luctus tincidunt. 
-""pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;manufacturer
+""pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;
+slot-manufacturer=foo;slot-description=bar;slot-id=1;manufacturer
 =foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?module-path
 =foo&module-name=bar&pin-value=foo&pin-source=bar"" In volutpat laoreet auctor. Nam 
 convallis dignissim purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu 
@@ -504,6 +533,9 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == "foo");
             Assert.IsTrue(pkcs11uri.LibraryDescription == "bar");
             Assert.IsTrue(pkcs11uri.LibraryVersion == "1.0");
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == "foo");
+            Assert.IsTrue(pkcs11uri.SlotDescription == "bar");
+            Assert.IsTrue(pkcs11uri.SlotId == 1);
             Assert.IsTrue(pkcs11uri.Manufacturer == "foo");
             Assert.IsTrue(pkcs11uri.Model == "bar");
             Assert.IsTrue(pkcs11uri.Serial == "foo");
@@ -525,7 +557,8 @@ faucibus diam quis, hendrerit leo. Maecenas aliquam elit lectus, pulvinar accums
 egestas et. Duis tincidunt ut magna nec tincidunt. In vitae arcu convallis, tempus nisl
 id, tincidunt eros. Ut tristique, nisi eget suscipit mollis, diam quam vehicula risus, 
 eget tristique nunc est dapibus dolor. Vestibulum vehicula vel velit luctus tincidunt. 
-pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;manufacturer
+pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;
+slot-manufacturer=foo;slot-description=bar;slot-id=1;manufacturer
 =foo;model=bar;serial=foo;token=bar;type=private;object=foo;id=%62%61%72?module-path
 =foo&module-name=bar&pin-value=foo&pin-source=bar In volutpat laoreet auctor. Nam 
 convallis dignissim purus, non posuere leo sagittis sed. Proin non mi ante. Duis eu 
@@ -565,6 +598,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == true);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.Token == _pk11PathChars + _unicodeChar);
@@ -625,6 +659,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == true);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.Token == string.Empty);
@@ -666,6 +701,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == true);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.Manufacturer == _pk11PathChars + _unicodeChar);
@@ -726,6 +762,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == true);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.Manufacturer == string.Empty);
@@ -767,6 +804,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == true);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.Serial == _pk11PathChars + _unicodeChar);
@@ -827,6 +865,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == true);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.Serial == string.Empty);
@@ -868,6 +907,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == true);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.Model == _pk11PathChars + _unicodeChar);
@@ -928,6 +968,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == true);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.Model == string.Empty);
@@ -969,6 +1010,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == true);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == _pk11PathChars + _unicodeChar);
@@ -1029,6 +1071,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == true);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.LibraryManufacturer == string.Empty);
@@ -1070,6 +1113,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == true);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.LibraryDescription == _pk11PathChars + _unicodeChar);
@@ -1130,6 +1174,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == true);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.LibraryDescription == string.Empty);
@@ -1171,6 +1216,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == true);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.LibraryVersion == "1.256");
@@ -1299,6 +1345,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == true);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.LibraryVersion == "1.0");
@@ -1383,6 +1430,320 @@ sollicitudin bibendum.";
 
         #endregion
 
+        #region SlotManufacturer
+
+        [Test()]
+        public void SlotManufacturerWithValidValue()
+        {
+            string uri = @"pkcs11:slot-manufacturer=" + _pk11PathChars + _pctEncodedUnicodeChar;
+
+            // Build URI without length checking
+            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder(false);
+            pkcs11UriBuilder.SlotManufacturer = _pk11PathChars + _unicodeChar;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI without length checking
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == true);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == _pk11PathChars + _unicodeChar);
+
+            try
+            {
+                // Build URI with length checking
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = _pk11PathChars + _unicodeChar;
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is ArgumentOutOfRangeException);
+            }
+
+            try
+            {
+                // Parse URI with length checking
+                pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        [Test()]
+        public void SlotManufacturerWithInvalidValue()
+        {
+            string uri = @"pkcs11:slot-manufacturer=foobar" + _unicodeChar;
+
+            // Note: Builder cannot be used to produce URI like this one
+
+            try
+            {
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        [Test()]
+        public void SlotManufacturerWithoutValue()
+        {
+            string uri = @"pkcs11:slot-manufacturer=";
+
+            // Build URI
+            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+            pkcs11UriBuilder.SlotManufacturer = string.Empty;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == true);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.SlotManufacturer == string.Empty);
+        }
+
+        [Test()]
+        public void SlotManufacturerWithMultipleValues()
+        {
+            string uri = @"pkcs11:slot-manufacturer=foo;slot-manufacturer=bar";
+
+            // Note: Builder cannot be used to produce URI like this one
+
+            try
+            {
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        #endregion
+
+        #region SlotDescription
+
+        [Test()]
+        public void SlotDescriptionWithValidValue()
+        {
+            string uri = @"pkcs11:slot-description=" + _pk11PathChars + _pctEncodedUnicodeChar;
+
+            // Build URI without length checking
+            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder(false);
+            pkcs11UriBuilder.SlotDescription = _pk11PathChars + _unicodeChar;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI without length checking
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == true);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.SlotDescription == _pk11PathChars + _unicodeChar);
+
+            try
+            {
+                // Build URI with length checking
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotDescription = _pk11PathChars + _unicodeChar;
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is ArgumentOutOfRangeException);
+            }
+
+            try
+            {
+                // Parse URI with length checking
+                pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        [Test()]
+        public void SlotDescriptionWithInvalidValue()
+        {
+            string uri = @"pkcs11:slot-description=foobar" + _unicodeChar;
+
+            // Note: Builder cannot be used to produce URI like this one
+
+            try
+            {
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        [Test()]
+        public void SlotDescriptionWithoutValue()
+        {
+            string uri = @"pkcs11:slot-description=";
+
+            // Build URI
+            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+            pkcs11UriBuilder.SlotDescription = string.Empty;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == true);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.SlotDescription == string.Empty);
+        }
+
+        [Test()]
+        public void SlotDescriptionWithMultipleValues()
+        {
+            string uri = @"pkcs11:slot-description=foo;slot-description=bar";
+
+            // Note: Builder cannot be used to produce URI like this one
+
+            try
+            {
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        #endregion
+
+        #region SlotId
+
+        [Test()]
+        public void SlotIdWithValidValue()
+        {
+            string uri = @"pkcs11:slot-id=18446744073709551615";
+
+            // Build URI without length checking
+            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder(false);
+            pkcs11UriBuilder.SlotId = 18446744073709551615;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI without length checking
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == true);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.SlotId == 18446744073709551615);
+
+            // Build URI with length checking
+            pkcs11UriBuilder = new Pkcs11UriBuilder(true);
+            pkcs11UriBuilder.SlotId = 18446744073709551615;
+            Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
+
+            // Parse URI with length checking
+            pkcs11uri = new Pkcs11Uri(uri, true);
+            Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == true);
+            Assert.IsTrue(pkcs11uri.DefinesToken == false);
+            Assert.IsTrue(pkcs11uri.DefinesObject == false);
+            Assert.IsTrue(pkcs11uri.SlotId == 18446744073709551615);
+        }
+
+        [Test()]
+        public void SlotIdWithInvalidValue()
+        {
+            string uri = @"pkcs11:slot-id=foo";
+
+            // Note: Builder cannot be used to produce URI like this one
+
+            try
+            {
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+
+            uri = @"pkcs11:slot-id=18446744073709551616";
+
+            // Note: Builder cannot be used to produce URI like this one
+
+            try
+            {
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        [Test()]
+        public void SlotIdWithoutValue()
+        {
+            string uri = @"pkcs11:slot-id=";
+
+            // Note: Builder cannot be used to produce URI like this one
+
+            try
+            {
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        [Test()]
+        public void SlotIdWithMultipleValues()
+        {
+            string uri = @"pkcs11:slot-id=1;slot-id=2";
+
+            // Note: Builder cannot be used to produce URI like this one
+
+            try
+            {
+                // Parse URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
+                Assert.Fail("Exception expected but not thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is Pkcs11UriException);
+            }
+        }
+
+        #endregion
+
         #region Object
 
         [Test()]
@@ -1398,6 +1759,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == true);
             Assert.IsTrue(pkcs11uri.Object == _pk11PathChars + _unicodeChar);
@@ -1410,6 +1772,7 @@ sollicitudin bibendum.";
             // Parse URI with length checking
             pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == true);
             Assert.IsTrue(pkcs11uri.Object == _pk11PathChars + _unicodeChar);
@@ -1447,6 +1810,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == true);
             Assert.IsTrue(pkcs11uri.Object == string.Empty);
@@ -1492,6 +1856,7 @@ sollicitudin bibendum.";
                 // Parse URI
                 Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
                 Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+                Assert.IsTrue(pkcs11uri.DefinesSlot == false);
                 Assert.IsTrue(pkcs11uri.DefinesToken == false);
                 Assert.IsTrue(pkcs11uri.DefinesObject == true);
                 Assert.IsTrue(pkcs11uri.Type != null);
@@ -1584,6 +1949,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == true);
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, ConvertUtils.Utf8StringToBytes(_pk11PathChars + _unicodeChar)));
@@ -1598,6 +1964,7 @@ sollicitudin bibendum.";
             // Parse URI without length checking
             pkcs11uri = new Pkcs11Uri(uri, false);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == true);
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, ConvertUtils.Utf8StringToBytes(_pk11PathChars + _unicodeChar)));
@@ -1610,6 +1977,7 @@ sollicitudin bibendum.";
             // Parse URI with length checking
             pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == true);
             Assert.IsTrue(ByteArraysMatch(pkcs11uri.Id, ConvertUtils.Utf8StringToBytes(_pk11PathChars + _unicodeChar)));
@@ -1704,6 +2072,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == true);
             Assert.IsTrue(pkcs11uri.Id != null && pkcs11uri.Id.Length == 0);
@@ -1735,14 +2104,14 @@ sollicitudin bibendum.";
         [Test()]
         public void VendorSpecificPathAttributeWithIncompleteName()
         {
-            string uri = @"pkcs11:x-=" + _pk11PathChars + _pctEncodedUnicodeChar;
+            string uri = @"pkcs11:=" + _pk11PathChars + _pctEncodedUnicodeChar;
 
             try
             {
                 // Build URI
                 Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
                 pkcs11UriBuilder.UnknownPathAttributes = new Dictionary<string, string>();
-                pkcs11UriBuilder.UnknownPathAttributes.Add("x-", _pk11PathChars + _unicodeChar);
+                pkcs11UriBuilder.UnknownPathAttributes.Add(string.Empty, _pk11PathChars + _unicodeChar);
                 Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
                 Assert.Fail("Exception expected but not thrown");
             }
@@ -1766,14 +2135,14 @@ sollicitudin bibendum.";
         [Test()]
         public void VendorSpecificPathAttributeWithInvalidName()
         {
-            string uri = @"pkcs11:x-.=" + _pk11PathChars + _pctEncodedUnicodeChar;
+            string uri = @"pkcs11:.=" + _pk11PathChars + _pctEncodedUnicodeChar;
 
             try
             {
                 // Build URI
                 Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
                 pkcs11UriBuilder.UnknownPathAttributes = new Dictionary<string, string>();
-                pkcs11UriBuilder.UnknownPathAttributes.Add("x-.", _pk11PathChars + _unicodeChar);
+                pkcs11UriBuilder.UnknownPathAttributes.Add(".", _pk11PathChars + _unicodeChar);
                 Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
                 Assert.Fail("Exception expected but not thrown");
             }
@@ -1797,27 +2166,28 @@ sollicitudin bibendum.";
         [Test()]
         public void VendorSpecificPathAttributeWithValidNameAndValue()
         {
-            string uri = @"pkcs11:x-" + _pk11VendorAttrNameChars + "=" + _pk11PathChars + _pctEncodedUnicodeChar;
+            string uri = @"pkcs11:" + _pk11VendorAttrNameChars + "=" + _pk11PathChars + _pctEncodedUnicodeChar;
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
             pkcs11UriBuilder.UnknownPathAttributes = new Dictionary<string, string>();
-            pkcs11UriBuilder.UnknownPathAttributes.Add("x-" + _pk11VendorAttrNameChars, _pk11PathChars + _unicodeChar);
+            pkcs11UriBuilder.UnknownPathAttributes.Add(_pk11VendorAttrNameChars, _pk11PathChars + _unicodeChar);
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.UnknownPathAttributes != null && pkcs11uri.UnknownPathAttributes.Count == 1);
-            Assert.IsTrue(pkcs11uri.UnknownPathAttributes["x-" + _pk11VendorAttrNameChars] == _pk11PathChars + _unicodeChar);
+            Assert.IsTrue(pkcs11uri.UnknownPathAttributes[_pk11VendorAttrNameChars] == _pk11PathChars + _unicodeChar);
         }
         
         [Test()]
         public void VendorSpecificPathAttributeWithInvalidValue()
         {
-            string uri = @"pkcs11:x-vendor=foobar" + _unicodeChar;
+            string uri = @"pkcs11:vendor=foobar" + _unicodeChar;
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -1836,50 +2206,28 @@ sollicitudin bibendum.";
         [Test()]
         public void VendorSpecificPathAttributeWithoutValue()
         {
-            string uri = @"pkcs11:x-vendor=";
+            string uri = @"pkcs11:vendor=";
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
             pkcs11UriBuilder.UnknownPathAttributes = new Dictionary<string, string>();
-            pkcs11UriBuilder.UnknownPathAttributes.Add("x-vendor", string.Empty);
+            pkcs11UriBuilder.UnknownPathAttributes.Add("vendor", string.Empty);
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.UnknownPathAttributes != null && pkcs11uri.UnknownPathAttributes.Count == 1);
-            Assert.IsTrue(pkcs11uri.UnknownPathAttributes["x-vendor"] == string.Empty);
+            Assert.IsTrue(pkcs11uri.UnknownPathAttributes["vendor"] == string.Empty);
         }
 
         [Test()]
         public void VendorSpecificPathAttributeWithMultipleValues()
         {
-            string uri = @"pkcs11:x-vendor=foo;x-vendor=bar";
-
-            // Note: Builder cannot be used to produce URI like this one
-
-            try
-            {
-                // Parse URI
-                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
-                Assert.Fail("Exception expected but not thrown");
-            }
-            catch (Exception ex)
-            {
-                Assert.IsTrue(ex is Pkcs11UriException);
-            }
-        }
-
-        #endregion
-
-        #region Unknown path attribute
-
-        [Test()]
-        public void UnknownPathAttribute()
-        {
-            string uri = @"pkcs11:foo=bar";
+            string uri = @"pkcs11:vendor=foo;vendor=bar";
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -1916,6 +2264,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.PinSource == _pk11QueryChars + _unicodeChar);
@@ -1953,6 +2302,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.PinSource == string.Empty);
@@ -1994,6 +2344,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.PinValue == _pk11QueryChars + _unicodeChar);
@@ -2031,6 +2382,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.PinValue == string.Empty);
@@ -2072,6 +2424,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.ModuleName == _pk11QueryChars + _unicodeChar);
@@ -2109,6 +2462,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.ModuleName == string.Empty);
@@ -2150,6 +2504,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.ModulePath == _pk11QueryChars + _unicodeChar);
@@ -2187,6 +2542,7 @@ sollicitudin bibendum.";
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.ModulePath == string.Empty);
@@ -2218,14 +2574,14 @@ sollicitudin bibendum.";
         [Test()]
         public void VendorSpecificQueryAttributeWithIncompleteName()
         {
-            string uri = @"pkcs11:?x-=" + _pk11QueryChars + _pctEncodedUnicodeChar;
+            string uri = @"pkcs11:?=" + _pk11QueryChars + _pctEncodedUnicodeChar;
 
             try
             {
                 // Build URI
                 Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
                 pkcs11UriBuilder.UnknownQueryAttributes = new Dictionary<string, List<string>>();
-                pkcs11UriBuilder.UnknownQueryAttributes.Add("x-", new List<string> { _pk11QueryChars + _unicodeChar });
+                pkcs11UriBuilder.UnknownQueryAttributes.Add(string.Empty, new List<string> { _pk11QueryChars + _unicodeChar });
                 Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
                 Assert.Fail("Exception expected but not thrown");
             }
@@ -2249,14 +2605,14 @@ sollicitudin bibendum.";
         [Test()]
         public void VendorSpecificQueryAttributeWithInvalidName()
         {
-            string uri = @"pkcs11:?x-.=" + _pk11QueryChars + _pctEncodedUnicodeChar;
+            string uri = @"pkcs11:?.=" + _pk11QueryChars + _pctEncodedUnicodeChar;
 
             try
             {
                 // Build URI
                 Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
                 pkcs11UriBuilder.UnknownQueryAttributes = new Dictionary<string, List<string>>();
-                pkcs11UriBuilder.UnknownQueryAttributes.Add("x-.", new List<string> { _pk11QueryChars + _unicodeChar });
+                pkcs11UriBuilder.UnknownQueryAttributes.Add(".", new List<string> { _pk11QueryChars + _unicodeChar });
                 Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
                 Assert.Fail("Exception expected but not thrown");
             }
@@ -2280,29 +2636,29 @@ sollicitudin bibendum.";
         [Test()]
         public void VendorSpecificQueryAttributeWithValidNameAndValue()
         {
-            string uri = @"pkcs11:?x-" + _pk11VendorAttrNameChars + "=" + _pk11QueryChars + _pctEncodedUnicodeChar;
+            string uri = @"pkcs11:?" + _pk11VendorAttrNameChars + "=" + _pk11QueryChars + _pctEncodedUnicodeChar;
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
             pkcs11UriBuilder.UnknownQueryAttributes = new Dictionary<string, List<string>>();
-            pkcs11UriBuilder.UnknownQueryAttributes.Add("x-" + _pk11VendorAttrNameChars, new List<string> { _pk11QueryChars + _unicodeChar });
+            pkcs11UriBuilder.UnknownQueryAttributes.Add(_pk11VendorAttrNameChars, new List<string> { _pk11QueryChars + _unicodeChar });
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.UnknownQueryAttributes != null && pkcs11uri.UnknownQueryAttributes.Count == 1);
-            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["x-" + _pk11VendorAttrNameChars].Count == 1);
-            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["x-" + _pk11VendorAttrNameChars][0] == _pk11QueryChars + _unicodeChar);
-
+            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes[_pk11VendorAttrNameChars].Count == 1);
+            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes[_pk11VendorAttrNameChars][0] == _pk11QueryChars + _unicodeChar);
         }
 
         [Test()]
         public void VendorSpecificQueryAttributeWithInvalidValue()
         {
-            string uri = @"pkcs11:?x-vendor=foobar" + _unicodeChar;
+            string uri = @"pkcs11:?vendor=foobar" + _unicodeChar;
 
             // Note: Builder cannot be used to produce URI like this one
 
@@ -2321,33 +2677,34 @@ sollicitudin bibendum.";
         [Test()]
         public void VendorSpecificQueryAttributeWithoutValue()
         {
-            string uri = @"pkcs11:?x-vendor=";
+            string uri = @"pkcs11:?vendor=";
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
             pkcs11UriBuilder.UnknownQueryAttributes = new Dictionary<string, List<string>>();
-            pkcs11UriBuilder.UnknownQueryAttributes.Add("x-vendor", new List<string> { string.Empty });
+            pkcs11UriBuilder.UnknownQueryAttributes.Add("vendor", new List<string> { string.Empty });
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
             Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
             Assert.IsTrue(pkcs11uri.DefinesLibrary == false);
+            Assert.IsTrue(pkcs11uri.DefinesSlot == false);
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.UnknownQueryAttributes != null && pkcs11uri.UnknownQueryAttributes.Count == 1);
-            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["x-vendor"].Count == 1);
-            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["x-vendor"][0] == string.Empty);
+            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["vendor"].Count == 1);
+            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["vendor"][0] == string.Empty);
         }
 
         [Test()]
         public void VendorSpecificQueryAttributeWithMultipleValues()
         {
-            string uri = @"pkcs11:?x-vendor=foo&x-vendor=bar";
+            string uri = @"pkcs11:?vendor=foo&vendor=bar";
 
             // Build URI
             Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
             pkcs11UriBuilder.UnknownQueryAttributes = new Dictionary<string, List<string>>();
-            pkcs11UriBuilder.UnknownQueryAttributes.Add("x-vendor", new List<string> { "foo", "bar" });
+            pkcs11UriBuilder.UnknownQueryAttributes.Add("vendor", new List<string> { "foo", "bar" });
             Assert.IsTrue(uri == pkcs11UriBuilder.ToString());
 
             // Parse URI
@@ -2356,36 +2713,13 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.DefinesToken == false);
             Assert.IsTrue(pkcs11uri.DefinesObject == false);
             Assert.IsTrue(pkcs11uri.UnknownQueryAttributes != null && pkcs11uri.UnknownQueryAttributes.Count == 1);
-            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["x-vendor"].Count == 2);
-            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["x-vendor"][0] == "foo");
-            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["x-vendor"][1] == "bar");
+            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["vendor"].Count == 2);
+            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["vendor"][0] == "foo");
+            Assert.IsTrue(pkcs11uri.UnknownQueryAttributes["vendor"][1] == "bar");
         }
 
         #endregion
-
-        #region Unknown query attribute
-
-        [Test()]
-        public void UnknownQueryAttribute()
-        {
-            string uri = @"pkcs11:?foo=bar";
-
-            // Note: Builder cannot be used to produce URI like this one
-
-            try
-            {
-                // Parse URI
-                Pkcs11Uri pkcs11uri = new Pkcs11Uri(uri);
-                Assert.Fail("Exception expected but not thrown");
-            }
-            catch (Exception ex)
-            {
-                Assert.IsTrue(ex is Pkcs11UriException);
-            }
-        }
-
-        #endregion
-
+        
         #endregion
 
         #region GetObjectAttributes for Pkcs11Interop
@@ -2535,7 +2869,7 @@ sollicitudin bibendum.";
                 Assert.IsTrue(pkcs11uri.Matches(libraryInfo));
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
                 Assert.IsFalse(pkcs11uri.Matches(libraryInfo));
 
                 // All attributes matching
@@ -2588,7 +2922,7 @@ sollicitudin bibendum.";
                 Assert.IsTrue(pkcs11uri.Matches(libraryInfo));
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
                 Assert.IsFalse(pkcs11uri.Matches(libraryInfo));
 
                 // All attributes matching
@@ -2641,7 +2975,7 @@ sollicitudin bibendum.";
                 Assert.IsTrue(pkcs11uri.Matches(libraryInfo));
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
                 Assert.IsFalse(pkcs11uri.Matches(libraryInfo));
 
                 // All attributes matching
@@ -2698,7 +3032,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(libraryInfo));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;foo=bar");
             libraryInfo = new LLA8.CK_INFO();
             libraryInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
             libraryInfo.LibraryDescription = ConvertUtils.Utf8StringToBytes("bar");
@@ -2758,7 +3092,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(libraryInfo));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:library-manufacturer=foo;library-description=bar;library-version=1;foo=bar");
             libraryInfo = new LLA4.CK_INFO();
             libraryInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
             libraryInfo.LibraryDescription = ConvertUtils.Utf8StringToBytes("bar");
@@ -2800,6 +3134,291 @@ sollicitudin bibendum.";
 
         #endregion
 
+        #region SlotInfo
+
+        [Test()]
+        public void SlotInfoMatchesHLA()
+        {
+            using (HLA.Pkcs11 pkcs11 = new HLA.Pkcs11(_pkcs11LibraryPath, false))
+            {
+                List<HLA.Slot> slots = pkcs11.GetSlotList(true);
+                Assert.IsTrue(slots != null && slots.Count > 0);
+                HLA.SlotInfo slotInfo = slots[0].GetSlotInfo();
+
+                // Empty URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
+                Assert.IsTrue(pkcs11uri.Matches(slotInfo));
+
+                // Unknown path attribute in URI
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // All attributes matching
+                Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsTrue(pkcs11uri.Matches(slotInfo));
+
+                // Manufacturer nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = "foobar";
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // Description nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = "foobar";
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // Slot id nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId + 1;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+            }
+        }
+
+        [Test()]
+        public void SlotInfoMatchesHLA8()
+        {
+            // Skip test on incompatible platforms
+            if (UnmanagedLong.Size != 8)
+                return;
+
+            using (HLA8.Pkcs11 pkcs11 = new HLA8.Pkcs11(_pkcs11LibraryPath, false))
+            {
+                List<HLA8.Slot> slots = pkcs11.GetSlotList(true);
+                Assert.IsTrue(slots != null && slots.Count > 0);
+                HLA8.SlotInfo slotInfo = slots[0].GetSlotInfo();
+
+                // Empty URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
+                Assert.IsTrue(pkcs11uri.Matches(slotInfo));
+
+                // Unknown path attribute in URI
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // All attributes matching
+                Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsTrue(pkcs11uri.Matches(slotInfo));
+
+                // Manufacturer nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = "foobar";
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // Description nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = "foobar";
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // Slot id nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId + 1;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+            }
+        }
+
+        [Test()]
+        public void SlotInfoMatchesHLA4()
+        {
+            // Skip test on incompatible platforms
+            if (UnmanagedLong.Size != 4)
+                return;
+
+            using (HLA4.Pkcs11 pkcs11 = new HLA4.Pkcs11(_pkcs11LibraryPath, false))
+            {
+                List<HLA4.Slot> slots = pkcs11.GetSlotList(true);
+                Assert.IsTrue(slots != null && slots.Count > 0);
+                HLA4.SlotInfo slotInfo = slots[0].GetSlotInfo();
+
+                // Empty URI
+                Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
+                Assert.IsTrue(pkcs11uri.Matches(slotInfo));
+
+                // Unknown path attribute in URI
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // All attributes matching
+                Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsTrue(pkcs11uri.Matches(slotInfo));
+
+                // Manufacturer nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = "foobar";
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // Description nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = "foobar";
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+
+                // Slot id nonmatching
+                pkcs11UriBuilder = new Pkcs11UriBuilder();
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId + 1;
+                pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
+                Assert.IsFalse(pkcs11uri.Matches(slotInfo));
+            }
+        }
+
+        [Test()]
+        public void SlotInfoMatchesLLA8()
+        {
+            // Empty URI
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
+            LLA8.CK_SLOT_INFO slotInfo = new LLA8.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            ulong slotId = 1;
+            Assert.IsTrue(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Empty attribute
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=;slot-description=bar;slot-id=1");
+            slotInfo = new LLA8.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("                                ");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 1;
+            Assert.IsTrue(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Unknown path attribute in URI
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1;foo=bar");
+            slotInfo = new LLA8.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 1;
+            Assert.IsFalse(pkcs11uri.Matches(slotInfo, slotId));
+
+            // All attributes matching
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1");
+            slotInfo = new LLA8.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 1;
+            Assert.IsTrue(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Manufacturer nonmatching
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1");
+            slotInfo = new LLA8.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("bar");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 1;
+            Assert.IsFalse(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Description nonmatching
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1");
+            slotInfo = new LLA8.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("foo");
+            slotId = 1;
+            Assert.IsFalse(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Slot id nonmatching
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1");
+            slotInfo = new LLA8.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 2;
+            Assert.IsFalse(pkcs11uri.Matches(slotInfo, slotId));
+        }
+
+        [Test()]
+        public void SlotInfoMatchesLLA4()
+        {
+            // Empty URI
+            Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
+            LLA4.CK_SLOT_INFO slotInfo = new LLA4.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            uint slotId = 1;
+            Assert.IsTrue(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Empty attribute
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=;slot-description=bar;slot-id=1");
+            slotInfo = new LLA4.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("                                ");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 1;
+            Assert.IsTrue(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Unknown path attribute in URI
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1;foo=bar");
+            slotInfo = new LLA4.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 1;
+            Assert.IsFalse(pkcs11uri.Matches(slotInfo, slotId));
+
+            // All attributes matching
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1");
+            slotInfo = new LLA4.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 1;
+            Assert.IsTrue(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Manufacturer nonmatching
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1");
+            slotInfo = new LLA4.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("bar");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 1;
+            Assert.IsFalse(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Description nonmatching
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1");
+            slotInfo = new LLA4.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("foo");
+            slotId = 1;
+            Assert.IsFalse(pkcs11uri.Matches(slotInfo, slotId));
+
+            // Slot id nonmatching
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:slot-manufacturer=foo;slot-description=bar;slot-id=1");
+            slotInfo = new LLA4.CK_SLOT_INFO();
+            slotInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("foo");
+            slotInfo.SlotDescription = ConvertUtils.Utf8StringToBytes("bar");
+            slotId = 2;
+            Assert.IsFalse(pkcs11uri.Matches(slotInfo, slotId));
+        }
+
+        #endregion
+
         #region TokenInfo
 
         [Test()]
@@ -2816,7 +3435,7 @@ sollicitudin bibendum.";
                 Assert.IsTrue(pkcs11uri.Matches(tokenInfo));
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
                 Assert.IsFalse(pkcs11uri.Matches(tokenInfo));
 
                 // All attributes matching
@@ -2884,7 +3503,7 @@ sollicitudin bibendum.";
                 Assert.IsTrue(pkcs11uri.Matches(tokenInfo));
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
                 Assert.IsFalse(pkcs11uri.Matches(tokenInfo));
 
                 // All attributes matching
@@ -2952,7 +3571,7 @@ sollicitudin bibendum.";
                 Assert.IsTrue(pkcs11uri.Matches(tokenInfo));
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
                 Assert.IsFalse(pkcs11uri.Matches(tokenInfo));
 
                 // All attributes matching
@@ -3024,7 +3643,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(tokenInfo));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:token=foo;manufacturer=bar;serial=123;model=foobar;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:token=foo;manufacturer=bar;serial=123;model=foobar;foo=bar");
             tokenInfo = new LLA8.CK_TOKEN_INFO();
             tokenInfo.Label = ConvertUtils.Utf8StringToBytes("foo");
             tokenInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("bar");
@@ -3100,7 +3719,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(tokenInfo));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:token=foo;manufacturer=bar;serial=123;model=foobar;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:token=foo;manufacturer=bar;serial=123;model=foobar;foo=bar");
             tokenInfo = new LLA4.CK_TOKEN_INFO();
             tokenInfo.Label = ConvertUtils.Utf8StringToBytes("foo");
             tokenInfo.ManufacturerId = ConvertUtils.Utf8StringToBytes("bar");
@@ -3178,7 +3797,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(objectAttributes));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;foo=bar");
             objectAttributes = new List<HLA.ObjectAttribute>();
             objectAttributes.Add(new HLA.ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY));
             objectAttributes.Add(new HLA.ObjectAttribute(CKA.CKA_LABEL, "foobar"));
@@ -3283,7 +3902,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(objectAttributes));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;foo=bar");
             objectAttributes = new List<HLA8.ObjectAttribute>();
             objectAttributes.Add(new HLA8.ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY));
             objectAttributes.Add(new HLA8.ObjectAttribute(CKA.CKA_LABEL, "foobar"));
@@ -3388,7 +4007,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(objectAttributes));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;foo=bar");
             objectAttributes = new List<HLA4.ObjectAttribute>();
             objectAttributes.Add(new HLA4.ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY));
             objectAttributes.Add(new HLA4.ObjectAttribute(CKA.CKA_LABEL, "foobar"));
@@ -3493,7 +4112,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(objectAttributes));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;foo=bar");
             objectAttributes = new List<LLA8.CK_ATTRIBUTE>();
             objectAttributes.Add(LLA8.CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY));
             objectAttributes.Add(LLA8.CkaUtils.CreateAttribute(CKA.CKA_LABEL, "foobar"));
@@ -3598,7 +4217,7 @@ sollicitudin bibendum.";
             Assert.IsTrue(pkcs11uri.Matches(objectAttributes));
 
             // Unknown path attribute in URI
-            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;x-foo=bar");
+            pkcs11uri = new Pkcs11Uri(@"pkcs11:type=private;object=foobar;id=%01%02%03;foo=bar");
             objectAttributes = new List<LLA4.CK_ATTRIBUTE>();
             objectAttributes.Add(LLA4.CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY));
             objectAttributes.Add(LLA4.CkaUtils.CreateAttribute(CKA.CKA_LABEL, "foobar"));
@@ -3698,35 +4317,39 @@ sollicitudin bibendum.";
 
                 // Empty URI
                 Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
-                List<HLA.Slot> matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                List<HLA.Slot> matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == allSlots.Count);
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 0);
 
                 // All attributes matching one slot
                 HLA.LibraryInfo libraryInfo = pkcs11.GetInfo();
+                HLA.SlotInfo slotInfo = allSlots[0].GetSlotInfo();
                 HLA.TokenInfo tokenInfo = allSlots[0].GetTokenInfo();
                 
                 Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
                 pkcs11UriBuilder.LibraryManufacturer = libraryInfo.ManufacturerId;
                 pkcs11UriBuilder.LibraryDescription = libraryInfo.LibraryDescription;
                 pkcs11UriBuilder.LibraryVersion = libraryInfo.LibraryVersion;
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
                 pkcs11UriBuilder.Token = tokenInfo.Label;
                 pkcs11UriBuilder.Manufacturer = tokenInfo.ManufacturerId;
                 pkcs11UriBuilder.Serial = tokenInfo.SerialNumber;
                 pkcs11UriBuilder.Model = tokenInfo.Model;
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
 
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 1);
 
                 // One attribute nonmatching
                 pkcs11UriBuilder.Serial = "foobar";
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 0);
             }
         }
@@ -3746,35 +4369,39 @@ sollicitudin bibendum.";
 
                 // Empty URI
                 Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
-                List<HLA8.Slot> matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                List<HLA8.Slot> matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == allSlots.Count);
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 0);
 
                 // All attributes matching one slot
                 HLA8.LibraryInfo libraryInfo = pkcs11.GetInfo();
+                HLA8.SlotInfo slotInfo = allSlots[0].GetSlotInfo();
                 HLA8.TokenInfo tokenInfo = allSlots[0].GetTokenInfo();
 
                 Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
                 pkcs11UriBuilder.LibraryManufacturer = libraryInfo.ManufacturerId;
                 pkcs11UriBuilder.LibraryDescription = libraryInfo.LibraryDescription;
                 pkcs11UriBuilder.LibraryVersion = libraryInfo.LibraryVersion;
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
                 pkcs11UriBuilder.Token = tokenInfo.Label;
                 pkcs11UriBuilder.Manufacturer = tokenInfo.ManufacturerId;
                 pkcs11UriBuilder.Serial = tokenInfo.SerialNumber;
                 pkcs11UriBuilder.Model = tokenInfo.Model;
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
 
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 1);
 
                 // One attribute nonmatching
                 pkcs11UriBuilder.Serial = "foobar";
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 0);
             }
         }
@@ -3794,35 +4421,39 @@ sollicitudin bibendum.";
 
                 // Empty URI
                 Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
-                List<HLA4.Slot> matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                List<HLA4.Slot> matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == allSlots.Count);
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 0);
 
                 // All attributes matching one slot
                 HLA4.LibraryInfo libraryInfo = pkcs11.GetInfo();
+                HLA4.SlotInfo slotInfo = allSlots[0].GetSlotInfo();
                 HLA4.TokenInfo tokenInfo = allSlots[0].GetTokenInfo();
 
                 Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
                 pkcs11UriBuilder.LibraryManufacturer = libraryInfo.ManufacturerId;
                 pkcs11UriBuilder.LibraryDescription = libraryInfo.LibraryDescription;
                 pkcs11UriBuilder.LibraryVersion = libraryInfo.LibraryVersion;
+                pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                pkcs11UriBuilder.SlotId = slotInfo.SlotId;
                 pkcs11UriBuilder.Token = tokenInfo.Label;
                 pkcs11UriBuilder.Manufacturer = tokenInfo.ManufacturerId;
                 pkcs11UriBuilder.Serial = tokenInfo.SerialNumber;
                 pkcs11UriBuilder.Model = tokenInfo.Model;
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
 
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 1);
 
                 // One attribute nonmatching
                 pkcs11UriBuilder.Serial = "foobar";
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
-                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11);
+                matchedSlots = pkcs11uri.GetMatchingSlotList(pkcs11, true);
                 Assert.IsTrue(matchedSlots.Count == 0);
             }
         }
@@ -3851,19 +4482,22 @@ sollicitudin bibendum.";
                 // Empty URI
                 Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
                 ulong[] matchedSlots = null;
-                rv = pkcs11uri.GetMatchingSlotList(pkcs11, out matchedSlots);
+                rv = pkcs11uri.GetMatchingSlotList(pkcs11, true, out matchedSlots);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 Assert.IsTrue(matchedSlots.Length == allSlots.Length);
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
-                rv = pkcs11uri.GetMatchingSlotList(pkcs11, out matchedSlots);
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
+                rv = pkcs11uri.GetMatchingSlotList(pkcs11, true, out matchedSlots);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 Assert.IsTrue(matchedSlots.Length == 0);
 
                 // All attributes matching one slot
                 LLA8.CK_INFO libraryInfo = new LLA8.CK_INFO();
                 rv = pkcs11.C_GetInfo(ref libraryInfo);
+                Assert.IsTrue(rv == CKR.CKR_OK);
+                LLA8.CK_SLOT_INFO slotInfo = new LLA8.CK_SLOT_INFO();
+                rv = pkcs11.C_GetSlotInfo(allSlots[0], ref slotInfo);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 LLA8.CK_TOKEN_INFO tokenInfo = new LLA8.CK_TOKEN_INFO();
                 rv = pkcs11.C_GetTokenInfo(allSlots[0], ref tokenInfo);
@@ -3873,20 +4507,23 @@ sollicitudin bibendum.";
                 pkcs11UriBuilder.LibraryManufacturer = ConvertUtils.BytesToUtf8String(libraryInfo.ManufacturerId, true);
                 pkcs11UriBuilder.LibraryDescription = ConvertUtils.BytesToUtf8String(libraryInfo.LibraryDescription, true);
                 pkcs11UriBuilder.LibraryVersion = ConvertUtils.CkVersionToString(libraryInfo.LibraryVersion);
+                pkcs11UriBuilder.SlotManufacturer = ConvertUtils.BytesToUtf8String(slotInfo.ManufacturerId, true);
+                pkcs11UriBuilder.SlotDescription = ConvertUtils.BytesToUtf8String(slotInfo.SlotDescription, true);
+                pkcs11UriBuilder.SlotId = allSlots[0];
                 pkcs11UriBuilder.Token = ConvertUtils.BytesToUtf8String(tokenInfo.Label, true);
                 pkcs11UriBuilder.Manufacturer = ConvertUtils.BytesToUtf8String(tokenInfo.ManufacturerId, true);
                 pkcs11UriBuilder.Serial = ConvertUtils.BytesToUtf8String(tokenInfo.SerialNumber, true);
                 pkcs11UriBuilder.Model = ConvertUtils.BytesToUtf8String(tokenInfo.Model, true);
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
 
-                rv = pkcs11uri.GetMatchingSlotList(pkcs11, out matchedSlots);
+                rv = pkcs11uri.GetMatchingSlotList(pkcs11, true, out matchedSlots);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 Assert.IsTrue(matchedSlots.Length == 1);
 
                 // One attribute nonmatching
                 pkcs11UriBuilder.Serial = "foobar";
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
-                rv = pkcs11uri.GetMatchingSlotList(pkcs11, out matchedSlots);
+                rv = pkcs11uri.GetMatchingSlotList(pkcs11, true, out matchedSlots);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 Assert.IsTrue(matchedSlots.Length == 0);
 
@@ -3919,19 +4556,22 @@ sollicitudin bibendum.";
                 // Empty URI
                 Pkcs11Uri pkcs11uri = new Pkcs11Uri(@"pkcs11:");
                 uint[] matchedSlots = null;
-                rv = pkcs11uri.GetMatchingSlotList(pkcs11, out matchedSlots);
+                rv = pkcs11uri.GetMatchingSlotList(pkcs11, true, out matchedSlots);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 Assert.IsTrue(matchedSlots.Length == allSlots.Length);
 
                 // Unknown path attribute in URI
-                pkcs11uri = new Pkcs11Uri(@"pkcs11:x-vendor=foobar");
-                rv = pkcs11uri.GetMatchingSlotList(pkcs11, out matchedSlots);
+                pkcs11uri = new Pkcs11Uri(@"pkcs11:vendor=foobar");
+                rv = pkcs11uri.GetMatchingSlotList(pkcs11, true, out matchedSlots);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 Assert.IsTrue(matchedSlots.Length == 0);
 
                 // All attributes matching one slot
                 LLA4.CK_INFO libraryInfo = new LLA4.CK_INFO();
                 rv = pkcs11.C_GetInfo(ref libraryInfo);
+                Assert.IsTrue(rv == CKR.CKR_OK);
+                LLA4.CK_SLOT_INFO slotInfo = new LLA4.CK_SLOT_INFO();
+                rv = pkcs11.C_GetSlotInfo(allSlots[0], ref slotInfo);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 LLA4.CK_TOKEN_INFO tokenInfo = new LLA4.CK_TOKEN_INFO();
                 rv = pkcs11.C_GetTokenInfo(allSlots[0], ref tokenInfo);
@@ -3941,20 +4581,23 @@ sollicitudin bibendum.";
                 pkcs11UriBuilder.LibraryManufacturer = ConvertUtils.BytesToUtf8String(libraryInfo.ManufacturerId, true);
                 pkcs11UriBuilder.LibraryDescription = ConvertUtils.BytesToUtf8String(libraryInfo.LibraryDescription, true);
                 pkcs11UriBuilder.LibraryVersion = ConvertUtils.CkVersionToString(libraryInfo.LibraryVersion);
+                pkcs11UriBuilder.SlotManufacturer = ConvertUtils.BytesToUtf8String(slotInfo.ManufacturerId, true);
+                pkcs11UriBuilder.SlotDescription = ConvertUtils.BytesToUtf8String(slotInfo.SlotDescription, true);
+                pkcs11UriBuilder.SlotId = allSlots[0];
                 pkcs11UriBuilder.Token = ConvertUtils.BytesToUtf8String(tokenInfo.Label, true);
                 pkcs11UriBuilder.Manufacturer = ConvertUtils.BytesToUtf8String(tokenInfo.ManufacturerId, true);
                 pkcs11UriBuilder.Serial = ConvertUtils.BytesToUtf8String(tokenInfo.SerialNumber, true);
                 pkcs11UriBuilder.Model = ConvertUtils.BytesToUtf8String(tokenInfo.Model, true);
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
 
-                rv = pkcs11uri.GetMatchingSlotList(pkcs11, out matchedSlots);
+                rv = pkcs11uri.GetMatchingSlotList(pkcs11, true, out matchedSlots);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 Assert.IsTrue(matchedSlots.Length == 1);
 
                 // One attribute nonmatching
                 pkcs11UriBuilder.Serial = "foobar";
                 pkcs11uri = pkcs11UriBuilder.ToPkcs11Uri();
-                rv = pkcs11uri.GetMatchingSlotList(pkcs11, out matchedSlots);
+                rv = pkcs11uri.GetMatchingSlotList(pkcs11, true, out matchedSlots);
                 Assert.IsTrue(rv == CKR.CKR_OK);
                 Assert.IsTrue(matchedSlots.Length == 0);
 

@@ -43,6 +43,11 @@ namespace Net.Pkcs11Interop.URI
         const string _argUri = "--uri";
 
         /// <summary>
+        /// Command line argument that enables mode which lists all available slots
+        /// </summary>
+        const string _argListSlots = "--list-slots";
+
+        /// <summary>
         /// Command line argument that enables mode which lists all available tokens
         /// </summary>
         const string _argListTokens = "--list-tokens";
@@ -62,6 +67,7 @@ namespace Net.Pkcs11Interop.URI
             {
                 // Parse command line arguments
                 string uri = null;
+                int listSlots = 0;
                 int listTokens = 0;
                 int listObjects = 0;
 
@@ -75,6 +81,9 @@ namespace Net.Pkcs11Interop.URI
                     {
                         case _argUri:
                             uri = args[++i];
+                            break;
+                        case _argListSlots:
+                            listSlots = 1;
                             break;
                         case _argListTokens:
                             listTokens = 1;
@@ -91,8 +100,63 @@ namespace Net.Pkcs11Interop.URI
                 }
 
                 // Validate operation modes
-                if (listTokens + listObjects != 1)
-                    ExitWithHelp(string.Format("Argument \"{0}\" or \"{1}\" has to be specified", _argListTokens, _argListObjects));
+                if (listSlots + listTokens + listObjects != 1)
+                    ExitWithHelp(string.Format("Argument \"{0}\", \"{1}\" or \"{2}\" has to be specified", _argListSlots, _argListTokens, _argListObjects));
+
+                #region List slots
+
+                // Handle "--list-slots" operation mode
+                if (listSlots == 1)
+                {
+                    // Validate command line arguments
+                    if (string.IsNullOrEmpty(uri))
+                        ExitWithHelp("Required argument: " + _argUri);
+
+                    // Parse PKCS#11 URI
+                    Pkcs11Uri pkcs11Uri = new Pkcs11Uri(uri);
+
+                    // Verify that URI contains "module-path" attribute
+                    if (string.IsNullOrEmpty(pkcs11Uri.ModulePath))
+                        throw new Exception("PKCS#11 URI does not specify PKCS#11 library");
+
+                    // Load and initialize PKCS#11 library specified by URI
+                    using (Pkcs11 pkcs11 = new Pkcs11(pkcs11Uri.ModulePath, true))
+                    {
+                        Console.WriteLine("Listing available slots");
+
+                        int j = 0;
+
+                        //  Obtain a list of all slots
+                        List<Slot> slots = pkcs11.GetSlotList(false);
+                        foreach (Slot slot in slots)
+                        {
+                            j++;
+
+                            // Obtain information about the particular slot
+                            SlotInfo slotInfo = slot.GetSlotInfo();
+
+                            // Build PKCS#11 URI for the particular slot
+                            Pkcs11UriBuilder pkcs11UriBuilder = new Pkcs11UriBuilder();
+                            pkcs11UriBuilder.ModulePath = pkcs11Uri.ModulePath;
+                            pkcs11UriBuilder.SlotManufacturer = slotInfo.ManufacturerId;
+                            pkcs11UriBuilder.SlotDescription = slotInfo.SlotDescription;
+                            pkcs11UriBuilder.SlotId = slotInfo.SlotId;
+
+                            // Display slot information
+                            Console.WriteLine();
+                            Console.WriteLine("Slot no." + j);
+                            Console.WriteLine("  Manufacturer:       " + slotInfo.ManufacturerId);
+                            Console.WriteLine("  Description:        " + slotInfo.SlotDescription);
+                            Console.WriteLine("  ID:                 " + slotInfo.SlotId);
+                            Console.WriteLine("  PKCS#11 URI:        " + pkcs11UriBuilder.ToString());
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine(string.Format("Total number of listed slots: {0}", j));
+                    }
+                }
+
+                #endregion
 
                 #region List tokens
 
@@ -171,7 +235,7 @@ namespace Net.Pkcs11Interop.URI
                     using (Pkcs11 pkcs11 = new Pkcs11(pkcs11Uri.ModulePath, true))
                     {
                         // Obtain a list of all slots with tokens matching provided URI
-                        List<Slot> slots = pkcs11Uri.GetMatchingSlotList(pkcs11);
+                        List<Slot> slots = pkcs11Uri.GetMatchingSlotList(pkcs11, true);
                         if (slots.Count == 0)
                             throw new Exception("No token matches provided PKCS#11 URI");
                         if (slots.Count > 1)
@@ -413,6 +477,11 @@ namespace Net.Pkcs11Interop.URI
             }
 
             Console.WriteLine(@"Example usage:");
+            Console.WriteLine();
+            Console.WriteLine(@"  List available slots:");
+            Console.WriteLine(@"    Pkcs11Interop.URI.Demo.exe");
+            Console.WriteLine(@"      --uri <URI with module-path attribute>");
+            Console.WriteLine(@"      --list-slots");
             Console.WriteLine();
             Console.WriteLine(@"  List available tokens:");
             Console.WriteLine(@"    Pkcs11Interop.URI.Demo.exe");
