@@ -7,3 +7,9 @@ Pkcs11Interop.URI 1.1 (2014-12-31)
    - Removed x-pin-value and x-library-path attributes
    - Added pin-value, module-name and module-path attributes
  - Added demo application
+
+ Pkcs11Interop.URI 1.2 (2015-02-02)
+ - Intermediate version that has not been officially released
+ - Merged changes from RFC Draft 19
+   - Added "slot-manufacturer", "slot-description" and "slot-id" attributes
+   - Removed "x-" prefix from vendor specific attributes
