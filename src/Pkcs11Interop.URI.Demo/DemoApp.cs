@@ -235,7 +235,7 @@ namespace Net.Pkcs11Interop.URI
                     using (Pkcs11 pkcs11 = new Pkcs11(pkcs11Uri.ModulePath, true))
                     {
                         // Obtain a list of all slots with tokens matching provided URI
-                        List<Slot> slots = pkcs11Uri.GetMatchingSlotList(pkcs11, true);
+                        List<Slot> slots = Pkcs11UriUtils.GetMatchingSlotList(pkcs11Uri, pkcs11, true);
                         if (slots.Count == 0)
                             throw new Exception("No token matches provided PKCS#11 URI");
                         if (slots.Count > 1)

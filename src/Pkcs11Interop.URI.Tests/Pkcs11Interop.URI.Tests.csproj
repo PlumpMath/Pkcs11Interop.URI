@@ -43,9 +43,12 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Pkcs11UriUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pkcs11UriAndBuilderExample.cs" />
     <Compile Include="Pkcs11UriAndBuilderTest.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pkcs11Interop.URI\Pkcs11Interop.URI.csproj">

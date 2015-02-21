@@ -31,7 +31,7 @@ namespace Net.Pkcs11Interop.URI.Tests
         /// Demonstration of PKCS#11 URI usage in the signature creation application
         /// </summary>
         [Test()]
-        public void Pkcs11UriÏnSignatureCreationApplication()
+        public void Pkcs11UriInSignatureCreationApplication()
         {
             byte[] dataToSign = ConvertUtils.Utf8StringToBytes("Hello world");
             
@@ -92,7 +92,7 @@ namespace Net.Pkcs11Interop.URI.Tests
             using (Pkcs11 pkcs11 = new Pkcs11(pkcs11Uri.ModulePath, true))
             {
                 //  Obtain a list of all slots with tokens that match URI
-                List<Slot> slots = pkcs11Uri.GetMatchingSlotList(pkcs11, true);
+                List<Slot> slots = Pkcs11UriUtils.GetMatchingSlotList(pkcs11Uri, pkcs11, true);
                 if ((slots == null) || (slots.Count == 0))
                     throw new Exception("None of the slots matches PKCS#11 URI");
 
@@ -104,7 +104,7 @@ namespace Net.Pkcs11Interop.URI.Tests
 
                     // Get list of object attributes for the private key specified by URI
                     List<ObjectAttribute> searchTemplate = null;
-                    pkcs11Uri.GetObjectAttributes(out searchTemplate);
+                    Pkcs11UriUtils.GetObjectAttributes(pkcs11Uri, out searchTemplate);
 
                     // Find private key specified by URI
                     List<ObjectHandle> foundObjects = session.FindAllObjects(searchTemplate);

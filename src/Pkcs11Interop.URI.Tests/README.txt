@@ -1,10 +1,10 @@
 ﻿Preparing the testing environment
 *********************************
 
-1.  Edit the value of _pkcs11LibraryPath variable in 
-    Net.Pkcs11Interop.URI.Tests.Pkcs11UriAndBuilderTest class 
-    stored in Pkcs11UriAndBuilderTest.cs file to suit your needs.
-2.  Edit PKCS#11 URIs in Pkcs11UriÏnSignatureCreationApplication() method
+1.  Edit the value of Pkcs11LibraryPath.Pkcs11LibraryPath property in 
+    Net.Pkcs11Interop.URI.Tests.Settings class stored in Settings.cs 
+	file to suit your needs.
+2.  Edit PKCS#11 URIs in Pkcs11UriInSignatureCreationApplication() method
     of Net.Pkcs11Interop.URI.Tests.Pkcs11UriAndBuilderExample class 
     stored in Pkcs11UriAndBuilderExample.cs file to suit your needs.
 3.  Rebuild and run the tests.

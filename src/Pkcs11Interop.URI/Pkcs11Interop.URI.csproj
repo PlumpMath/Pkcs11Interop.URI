@@ -46,6 +46,7 @@
     <Compile Include="Pkcs11UriBuilder.cs" />
     <Compile Include="Pkcs11UriException.cs" />
     <Compile Include="Pkcs11UriSpec.cs" />
+    <Compile Include="Pkcs11UriUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
